@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:56:41 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/19 22:22:15 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/19 23:17:40 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "asm.h"
 
-int		is_whitespace(int c)
+int		is_whitespace(char c)
 {
 	return (c == '\t' ||
 			c == '\v' ||
@@ -22,6 +22,20 @@ int		is_whitespace(int c)
 			c == '\r' ||
 			c == ' ');
 }
+
+int	is_delimiter(char c)
+{
+	return (c == '\0'
+			|| c == '\n'
+			|| is_whitespace(c)
+			|| c == CMD_CHAR
+			|| c == '\"'
+			|| c == DIRECT_CHAR
+			|| c == SEPARATOR_CHAR
+			|| c == COMMENT_CHAR
+			|| c == ALT_COMMENT_CHAR);
+}
+
 
 void	skip_whitespaces(int *column, const char *line)
 {
@@ -69,33 +83,32 @@ t_lexeme		*init_lexeme(int row, int column, t_type_lexem type)
 	return (lexeme);
 }
 
-t_lexeme *parse_identificator(const char *line, int row, int *column, t_type_lexem type)
+t_lexeme *parse_identifier(const char *line, int row, int *column, t_type_lexem type)
 {
 	unsigned start;
 	t_lexeme *lexeme;
 
 	start = *column;
-
 	lexeme = init_lexeme(row, (*column)++, type);
-
 	while (line[*column] && ft_strchr(LABEL_CHARS, line[*column]))
 		(*column)++;
-
 	if ((*column - start) && line[*column] == LABEL_CHAR && (*column)++)
 	{
-		lexeme->content = get_token_content(parser, row, start);
 		lexeme->type = LABEL;
-		add_token(&parser->tokens, token);
+		lexeme->content = ft_strndup(&(line[start]), (*column) - start - 1);
+		if (!lexeme->content)
+			print_error("error alloc memory");
 	}
-	else if ((parser->column - column) && is_delimiter(row[parser->column]))
+	else if (((*column) - start) && is_delimiter(line[*column]))
 	{
-		token->content = get_token_content(parser, row, start);
-		if (token->type == INDIRECT)
-			token->type = (is_register(token->content)) ? REGISTER : OPERATOR;
-		add_token(&parser->tokens, token);
+		lexeme->content = ft_strndup(&(line[start]), (*column) - start - 1);
+		if (!lexeme->content)
+			print_error("error alloc memory");
+		if (lexeme->type == INDIRECT)
+			lexeme->type = (is_register(lexeme->content)) ? REGISTER : OPERATOR;
 	}
 	else
-		lexical_error(parser);
+		print_error("error lex");
 }
 
 t_lexeme *parse_lexeme(t_lexeme **list, int row, int *column, const char *line)
@@ -103,18 +116,18 @@ t_lexeme *parse_lexeme(t_lexeme **list, int row, int *column, const char *line)
 	if (line[*column] == SEPARATOR_CHAR && (*column)++)
 		return (init_lexeme(row, (*column)++, SEPARATOR));
 	else if (line[*column] == CMD_CHAR && (*column)++)
-		return (parse_identificator(line, row, *column, COMMAND));
+		return (parse_identifier(line, row, *column, COMMAND));
 	else if (line[*column] == DIRECT_CHAR && (*column)++)
 	{
 		if (line[*column] == LABEL_CHAR && (*column)++)
-			return (parse_identificator(line, row, *column, DIRECT_LABEL));
+			return (parse_identifier(line, row, *column, DIRECT_LABEL));
 		else
 			return (parse_number(line, row, *column, DIRECT));
 	}
 	else if (line[*column] == STRING_CHAR)
 		return (parse_string(line, row, *column, STRING));
 	else if (line[*column] == LABEL_CHAR)
-		return (parse_identificator(line, row, *column, INDIRECT_LABEL));
+		return (parse_identifier(line, row, *column, INDIRECT_LABEL));
 	else
 		return (parse_number(line, row, *column, INDIRECT));
 }
