@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/19 18:26:23 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/19 19:46:05 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ typedef struct s_assm
 	int output_fd;
 } t_assm;
 
-typedef struct s_position
-{
-	int row;
-	int column;
-} t_position;
-
 typedef enum
 {
 	COMMAND,
@@ -43,7 +37,6 @@ typedef enum
 	INDIRECT,
 	INDIRECT_LABEL,
 	SEPARATOR,
-	NEW_LINE,
 	END
 }	t_type_lexem;
 
@@ -51,7 +44,8 @@ typedef struct s_lexeme
 {
 	struct s_lexeme *next;
 	char			*content;
-	t_position		position;
+	int row;
+	int column;
 	t_type_lexem	type;
 } t_lexeme;
 
