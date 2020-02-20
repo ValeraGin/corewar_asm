@@ -5,6 +5,7 @@
 		"getopt.h": "c",
 		"op.h": "c",
 		"asm.h": "c",
-		"lexer.h": "c"
+		"lexer.h": "c",
+		"error.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 14:21:39 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:54:50 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,19 @@
 
 #include "lexer.h"
 
+#include "error.h"
+
+
 static void	print_usage(void)
 {
 	ft_printf("Usage: ./asm [-a] [*] <champion.s>\n");
 	exit(0);
 }
 
-int			compile_file(int options, char *filename, char *out_filename)
+int			compile_file(int options, const char *filename, char *out_filename)
 {
-	t_assm assm;
+	t_assm		assm;
+	t_lexeme	*list;
 
 	assm.options = options;
 	assm.filename = filename;
@@ -38,7 +42,9 @@ int			compile_file(int options, char *filename, char *out_filename)
 	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
 		print_error("Can't open to write file", errno);
 
+	list = read_lexems(assm.input_fd);
 
+	return (1);
 }
 
 int		main(int argc, char const *argv[])

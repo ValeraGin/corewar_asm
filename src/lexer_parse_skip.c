@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   lexer_parse_skip.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 19:47:59 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/20 14:39:49 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/20 19:47:22 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#include "op.h"
+#include "lexer.h"
 
-#include "libft.h"
-
-typedef struct s_assm
+void	skip_whitespaces(int *column, const char *line)
 {
-	int options;
-	const char *filename;
-	const char *out_filename;
+	while (is_whitespace(line[*column]))
+		(*column)++;
+}
 
-	int input_fd;
-	int output_fd;
-} t_assm;
-
-typedef struct		s_champion
+void	skip_comment(int *column, const char *line)
 {
-	char *name;
-	char *comment;
-}					t_champion;
-
-int			handle_options(int *ac, const char ***av);
-
-#endif
+	if (line[*column] == COMMENT_CHAR
+		|| line[*column] == ALT_COMMENT_CHAR)
+		while (line[*column] && line[*column] != '\n')
+			(*column)++;
+}

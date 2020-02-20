@@ -6,14 +6,14 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:08:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 14:08:44 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:51:10 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-int			print_error(const char str, int ret_code);
+int			print_error(const char *str, int ret_code);
 
 #endif
 

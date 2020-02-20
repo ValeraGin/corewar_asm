@@ -6,13 +6,13 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:20:51 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/19 16:11:37 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/20 19:47:45 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		handle_options(int *argc, char ***argv)
+int		handle_options(int *argc, const char ***argv)
 {
 	return (1);
 }
