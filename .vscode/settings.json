@@ -3,6 +3,8 @@
 		"ft_printf.h": "c",
 		"libft.h": "c",
 		"getopt.h": "c",
-		"op.h": "c"
+		"op.h": "c",
+		"asm.h": "c",
+		"lexer.h": "c"
 	}
 }

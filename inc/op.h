@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/02/19 21:58:09 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:13:02 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 
 # define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"
 
+
+# define REG_CHAR				'r'
 # define CMD_CHAR				'.'
 # define STRING_CHAR			'\"'
 

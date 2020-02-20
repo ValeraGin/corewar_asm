@@ -1,36 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   asm.h                                              :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 14:22:49 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/20 14:35:49 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASM_H
-# define ASM_H
+#ifndef LEXER_H
+# define LEXER_H
 
-#include "libft.h"
-
-typedef struct s_assm
+typedef enum
 {
-	int options;
-	char *filename;
-	char *out_filename;
+	COMMAND,
+	STRING,
+	LABEL,
+	OPERATOR,
+	REGISTER,
+	DIRECT,
+	DIRECT_LABEL,
+	INDIRECT,
+	INDIRECT_LABEL,
+	SEPARATOR,
+	END
+}	t_type_lexem;
 
-	int input_fd;
-	int output_fd;
-} t_assm;
-
-typedef struct		s_champion
+typedef struct s_lexeme
 {
-	char *name;
-	char *comment;
-}					t_champion;
+	struct s_lexeme *next;
+	char			*content;
+	int row;
+	int column;
+	t_type_lexem	type;
+} t_lexeme;
 
-int			handle_options(int *ac, char ***av);
+t_lexeme	*parse_lexeme(int row, int *column, const char *line);
+
+t_lexeme	*read_lexems(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/19 17:55:19 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/20 14:21:39 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@
 #include "libft.h"
 #include "asm.h"
 
-int			print_error(const char str, int ret_code)
-{
-	perror(str);
-	exit(ret_code);
-}
+#include "lexer.h"
 
 static void	print_usage(void)
 {
@@ -41,7 +37,8 @@ int			compile_file(int options, char *filename, char *out_filename)
 		print_error("Can't read source file", errno);
 	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
 		print_error("Can't open to write file", errno);
-	
+
+
 }
 
 int		main(int argc, char const *argv[])
