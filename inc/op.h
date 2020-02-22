@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/02/20 14:13:02 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 22:01:58 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define CMD_CHAR				'.'
 # define STRING_CHAR			'\"'
 
+# define NAME_CMD_PREFIX_SIZE	1
+
 # define NAME_CMD_STRING		".name"
 # define COMMENT_CMD_STRING		".comment"
 
@@ -61,17 +63,9 @@ typedef char	t_arg_type;
 # define COMMENT_LENGTH			(2048)
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
-typedef struct		s_header
-{
-	unsigned int	magic;
-	char			prog_name[PROG_NAME_LENGTH + 1];
-	unsigned int	prog_size;
-	char			comment[COMMENT_LENGTH + 1];
-}					t_header;
-
 typedef struct		s_op
 {
-	char			*cmd;
+	char			*name;
 	int				count_of_args;
 	int				arg_type[3];
 	int				op_code;

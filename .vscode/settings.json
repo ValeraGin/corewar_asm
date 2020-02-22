@@ -6,6 +6,8 @@
 		"op.h": "c",
 		"asm.h": "c",
 		"lexer.h": "c",
-		"error.h": "c"
+		"error.h": "c",
+		"string.h": "c",
+		"strings.h": "c"
 	}
 }

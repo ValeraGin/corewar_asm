@@ -6,15 +6,16 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:26:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 19:47:08 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 16:49:09 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdlib.h>
 
 #include "lexer.h"
 #include "libft.h"
 #include "error.h"
 #include "lexer.h"
-
 
 void add_lexeme(t_lexeme **list, t_lexeme *new)
 {

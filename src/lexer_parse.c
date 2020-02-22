@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:24:20 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 20:09:45 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 22:01:58 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_lexeme *parse_identifier(const char *line, int row, int *column,
 			else if (is_register(lexeme->data_str))
 				lexeme->type = REGISTER;
 			else
-				lexeme->type = INSTRUCTION;
+				lexeme->type = OPERATION;
 		}
 		else if (lexeme->type == DIRECT_LABEL || lexeme->type == INDIRECT_LABEL)
 			if (!(line[*column] == LABEL_CHAR && ++(*column)))

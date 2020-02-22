@@ -6,28 +6,31 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 20:07:48 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 21:59:55 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
+
+#define ARGUMENTS 1 << 16
+
 typedef enum
 {
-	COMMAND,
-	STRING,
-	LABEL,
-	INSTRUCTION,
-	REGISTER,
-	DIRECT,
-	DIRECT_LABEL,
-	INDIRECT,
-	INDIRECT_LABEL,
-	SEPARATOR,
-	END,
-	NEWLINE,
-	UNKNOWN
+	COMMAND = 0,
+	STRING = 1,
+	LABEL = 2,
+	OPERATION = 3,
+	REGISTER = 4 | ARGUMENTS,
+	DIRECT = 5 | ARGUMENTS,
+	DIRECT_LABEL = 6 | ARGUMENTS,
+	INDIRECT = 7 | ARGUMENTS,
+	INDIRECT_LABEL = 8 | ARGUMENTS,
+	SEPARATOR = 9,
+	END = 10,
+	NEWLINE = 11,
+	UNKNOWN = 12
 }	t_type_lexem;
 
 typedef struct s_lexeme

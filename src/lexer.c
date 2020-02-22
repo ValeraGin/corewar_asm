@@ -6,13 +6,12 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:56:41 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 20:09:13 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 20:22:30 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "libft.h"
-#include "asm.h"
 #include "error.h"
 #include "lexer.h"
 
@@ -38,5 +37,6 @@ t_lexeme	*read_lexems(int fd)
 		ft_strdel(&line);
 		row++;
 	}
+	add_lexeme(&list, init_lexeme(row, column, END));
 	return (list);
 }

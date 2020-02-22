@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/20 14:54:50 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/22 19:11:03 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include "lexer.h"
 
 #include "error.h"
+
+#include "gen.h"
 
 
 static void	print_usage(void)
@@ -43,6 +45,8 @@ int			compile_file(int options, const char *filename, char *out_filename)
 		print_error("Can't open to write file", errno);
 
 	list = read_lexems(assm.input_fd);
+
+	generator(assm.output_fd, list);
 
 	return (1);
 }
