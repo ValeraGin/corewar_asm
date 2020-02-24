@@ -6,15 +6,17 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/22 21:59:55 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/24 17:39:27 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
+# include "op.h"
+# include "libft.h"
 
-#define ARGUMENTS 1 << 16
+# define ARGUMENTS 1 << 16
 
 typedef enum
 {
@@ -42,6 +44,8 @@ typedef struct s_lexeme
 	int column;
 	t_type_lexem	type;
 } t_lexeme;
+
+t_lexeme	*skip_newline(t_lexeme *c);
 
 int			is_register(const char *str);
 int			is_delimiter(char c);

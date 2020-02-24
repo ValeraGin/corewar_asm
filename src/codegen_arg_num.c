@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   codegen_arg_num.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 14:07:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 17:59:07 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/24 16:15:09 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/24 21:39:25 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "gen.h"
 
-int			print_error(const char *str, int ret_code)
+void		handle_num(t_codegen *cg, t_lexeme *c, t_op *op)
 {
-	perror(str);
-	exit(ret_code);
+	unsigned	start;
+	size_t		size;
+
+	start = (c->type == DIRECT) ? 1 : 0;
+	size = (c->type == DIRECT && !op->short_tdir) ? DIR_SIZE : IND_SIZE;
+	if (size == 2)
+		int32_to_b(cg->code, cg->code_pos, (int16_t)c->data_number, size);
+	else
+		int32_to_b(cg->code, cg->code_pos, c->data_number, size);
+	cg->code_pos += size;
 }

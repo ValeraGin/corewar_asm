@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   codegen_arg_reg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 14:07:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 17:59:07 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/24 16:17:27 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/24 21:40:01 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "gen.h"
 
-int			print_error(const char *str, int ret_code)
+void		handle_register(t_codegen *cg, t_lexeme *c)
 {
-	perror(str);
-	exit(ret_code);
+	int32_to_b(cg->code, cg->code_pos, (int8_t)c->data_number, 1);
+	cg->code_pos += 1;
 }

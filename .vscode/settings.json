@@ -8,6 +8,7 @@
 		"lexer.h": "c",
 		"error.h": "c",
 		"string.h": "c",
-		"strings.h": "c"
+		"strings.h": "c",
+		"gen.h": "c"
 	}
 }

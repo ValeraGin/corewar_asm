@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   codegen_helper.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/20 14:07:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 17:59:07 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/24 16:00:39 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/24 21:40:01 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "libft.h"
 
-int			print_error(const char *str, int ret_code)
+void	int32_to_b(char *data, int32_t pos, int32_t value, size_t size)
 {
-	perror(str);
-	exit(ret_code);
+	int8_t		i;
+
+	i = 0;
+	while (size)
+	{
+		data[pos + size - 1] = (uint8_t)((value >> i) & 0xFF);
+		i += 8;
+		size--;
+	}
 }
