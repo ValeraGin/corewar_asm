@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:56:41 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 16:25:26 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 19:47:38 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_lexeme	*read_lexems(int fd)
 		{
 			if (skip_whitespaces(&column, line) || skip_comment(&column, line))
 				continue;
-			add_lexeme(&list, parse_lexeme(row, &column, line));
+			add_lexeme(&list, parse_lexeme(fd, row, &column, line));
 		}
 		add_lexeme(&list, init_lexeme(row, column, NEWLINE));
 		ft_strdel(&line);

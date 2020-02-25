@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 16:24:31 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 20:25:07 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ typedef struct s_lexeme
 	struct s_lexeme *next;
 	char		*data_str;
 	int			data_number;
-	int row;
-	int column;
+	int 		row;
+	int			column;
+	int			complete_func;
 	t_type_lexem	type;
 } t_lexeme;
 
@@ -57,8 +58,10 @@ int			skip_comment(int *column, const char *line);
 t_lexeme	*init_lexeme(int row, int column, t_type_lexem type);
 void		add_lexeme(t_lexeme **list, t_lexeme *new);
 
-t_lexeme	*parse_lexeme(int row, int *column, const char *line);
+t_lexeme	*parse_lexeme(int fd, int row, int *column, const char *line);
 
 t_lexeme	*read_lexems(int fd);
+
+void		free_lexeme_list(t_lexeme **list);
 
 #endif

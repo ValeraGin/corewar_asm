@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 17:02:57 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 20:29:30 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,18 @@ static void	print_usage(void)
 	exit(0);
 }
 
+void	free_assm(t_assm *assm)
+{
+	ft_strdel(&(assm->out_filename));
+}
+
 int			compile_file(int options, const char *filename, char *out_filename)
 {
 	t_assm		assm;
 	t_lexeme	*lexems;
+	t_lexeme	*lexems_head;
 	t_champion	ch;
+
 
 	assm.options = options;
 	assm.filename = filename;
@@ -39,12 +46,15 @@ int			compile_file(int options, const char *filename, char *out_filename)
 		print_error("Can't read source file", errno);
 	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
 		print_error("Can't open to write file", errno);
-	lexems = read_lexems(assm.input_fd);
+	lexems = lexems_head = read_lexems(assm.input_fd);
 	init_champ(&ch);
 	lexems = read_header(lexems, &ch);
 	ch.code = gen_code(lexems, &(ch.code_size));
+	free_lexeme_list(&(lexems_head));
 	if (!champ_write_to_file(&ch, assm.output_fd))
 		print_error("Error when write already generated champ code to file", errno);
+	free_champ(&ch);
+	free_assm(&assm);
 	return (1);
 }
 

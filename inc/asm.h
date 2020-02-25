@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 16:50:41 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 21:25:13 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_assm
 {
 	int options;
 	const char *filename;
-	const char *out_filename;
+	char *out_filename;
 	int input_fd;
 	int output_fd;
 }				t_assm;
@@ -34,6 +34,7 @@ typedef struct		s_champion_
 }					t_champion;
 
 
+void		free_champ(t_champion *ch);
 void		init_champ(t_champion *ch);
 int			champ_write_to_file(t_champion *ch, int fd);
 

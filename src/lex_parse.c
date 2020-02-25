@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:24:20 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 19:09:05 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 19:52:31 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,38 +32,6 @@ int		parse_integer(const char *str, int *i)
 	}
 	return (nbr);
 }
-
-// # define FT_ULONG_MAX	((unsigned long)(~0L))
-// # define FT_LONG_MAX	((long)(FT_ULONG_MAX >> 1))
-
-// int32_t		ft_atoi32(const char *str)
-// {
-// 	unsigned long	result;
-
-// 	unsigned long	border;
-// 	size_t			i;
-// 	int				sign;
-
-// 	result = 0;
-// 	border = (unsigned long)(FT_LONG_MAX / 10);
-// 	i = 0;
-// 	while (ft_isspace(str[i]))
-// 		i++;
-// 	sign = (str[i] == '-') ? -1 : 1;
-// 	if (str[i] == '-' || str[i] == '+')
-// 		i++;
-// 	while (ft_isdigit(str[i]))
-// 	{
-// 		if ((result > border || (result == border && (str[i] - '0') > 7))
-// 															&& sign == 1)
-// 			return (-1);
-// 		else if ((result > border || (result == border && (str[i] - '0') > 8))
-// 																&& sign == -1)
-// 			return (0);
-// 		result = result * 10 + (str[i++] - '0');
-// 	}
-// 	return ((int32_t)(result * sign));
-// }
 
 t_lexeme *parse_number(const char *line, int row, int *column,
 							t_type_lexem type)
@@ -92,7 +60,7 @@ t_lexeme *parse_number(const char *line, int row, int *column,
 	return (lexeme);
 }
 
-t_lexeme *parse_string(const char *line, int row, int *column)
+t_lexeme *parse_string(int fd, const char *line, int row, int *column)
 {
 	unsigned start;
 	t_lexeme *lexeme;
@@ -147,7 +115,7 @@ t_lexeme *parse_identifier(const char *line, int row, int *column,
 	return (lexeme);
 }
 
-t_lexeme *parse_lexeme(int row, int *column, const char *line)
+t_lexeme *parse_lexeme(int fd, int row, int *column, const char *line)
 {
 	// if (row == 8)
 	// 	write(1, "", 1);
@@ -163,7 +131,7 @@ t_lexeme *parse_lexeme(int row, int *column, const char *line)
 			return (parse_number(line, row, column, DIRECT));
 	}
 	else if (line[*column] == STRING_CHAR)
-		return (parse_string(line, row, column));
+		return (parse_string(fd, line, row, column));
 	else if (line[*column] == LABEL_CHAR && ++(*column))
 		return (parse_identifier(line, row, column, INDIRECT_LABEL));
 	else if (ft_isdigit(line[*column]) || line[*column] == '-')

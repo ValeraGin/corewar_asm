@@ -6,13 +6,20 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:02:07 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 14:58:37 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 20:21:54 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include "error.h"
 #include "gen.h"
+
+void		free_champ(t_champion *ch)
+{
+	ft_strdel(&(ch->code));
+	ft_strdel(&(ch->name));
+	ft_strdel(&(ch->comment));
+}
 
 void init_champ(t_champion *ch)
 {

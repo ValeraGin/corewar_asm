@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:23:52 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 14:59:01 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 20:18:55 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void init_codegen(t_codegen *cg)
 char*	gen_code(t_lexeme *c, int *ret_size)
 {
 	t_codegen cg;
+	char *code_for_ret;
 
 	init_codegen(&cg);
 	while (c->type != END)
@@ -51,5 +52,8 @@ char*	gen_code(t_lexeme *c, int *ret_size)
 	}
 	replace_mentions(&cg);
 	*ret_size = cg.code_pos;
-	return(cg.code);
+	code_for_ret = cg.code;
+	cg.code = 0;
+	free_codegen(&cg);
+	return(code_for_ret);
 }
