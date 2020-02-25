@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:02:07 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 21:41:40 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:58:37 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int champ_write_to_file(t_champion *ch, int fd)
 	pos = 0;
 	len = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
 	if (!(header = ft_strnew((size_t)len)))
-		print_error("err, ", 0);
+		print_error("error alloc", 0);
 	int32_to_b(header, pos, COREWAR_EXEC_MAGIC, 4);
 	pos += 4;
 	ft_memcpy(&header[pos], ch->name, ft_strlen(ch->name));

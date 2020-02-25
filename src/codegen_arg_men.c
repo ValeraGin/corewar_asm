@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:15:51 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 20:27:59 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:58:26 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_mention	*init_mention(t_codegen *cg, t_lexeme *c, size_t size)
 	t_mention	*mention;
 
 	if (!(mention = (t_mention *)ft_memalloc(sizeof(t_mention))))
-		print_error("ERR", 0);
+		print_error("error alloc", 0);
 	mention->row = c->row;
 	mention->column = c->column;
 	mention->pos = cg->code_pos;

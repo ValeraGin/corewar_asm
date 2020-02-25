@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:55:04 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 21:39:45 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 14:59:46 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	replace_mentions(t_codegen *cg)
 	while (label)
 	{
 		if (label->op_pos == -1)
-			print_error("label", 0);
+			print_error("label has mention, but don,t have place", 0);
 		else
 		{
 			mention = label->mentions;

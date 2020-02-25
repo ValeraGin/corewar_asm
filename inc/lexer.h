@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 17:39:27 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 16:24:31 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int			is_register(const char *str);
 int			is_delimiter(char c);
 int			is_whitespace(char c);
 
-void		skip_whitespaces(int *column, const char *line);
-void		skip_comment(int *column, const char *line);
+int			skip_whitespaces(int *column, const char *line);
+int			skip_comment(int *column, const char *line);
 
 t_lexeme	*init_lexeme(int row, int column, t_type_lexem type);
 void		add_lexeme(t_lexeme **list, t_lexeme *new);

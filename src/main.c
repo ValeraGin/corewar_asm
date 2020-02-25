@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 21:18:47 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 17:02:57 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	print_usage(void)
 int			compile_file(int options, const char *filename, char *out_filename)
 {
 	t_assm		assm;
-	t_lexeme	*list;
+	t_lexeme	*lexems;
 	t_champion	ch;
 
 	assm.options = options;
@@ -39,10 +39,10 @@ int			compile_file(int options, const char *filename, char *out_filename)
 		print_error("Can't read source file", errno);
 	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
 		print_error("Can't open to write file", errno);
-	list = read_lexems(assm.input_fd);
+	lexems = read_lexems(assm.input_fd);
 	init_champ(&ch);
-	list = 	read_header(list, &ch);
-	ch.code = gen_code(list, &(ch.code_size));
+	lexems = read_header(lexems, &ch);
+	ch.code = gen_code(lexems, &(ch.code_size));
 	if (!champ_write_to_file(&ch, assm.output_fd))
 		print_error("Error when write already generated champ code to file", errno);
 	return (1);

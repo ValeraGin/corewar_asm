@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:09:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 21:45:57 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/25 19:06:49 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 	int i;
 	t_cmd *cmd;
 
-	while (c && c->type == COMMAND)
+	while (c && c->type == COMMAND || c->type == NEWLINE)
 	{
+		if (c->type == NEWLINE && (c = c->next))
+			continue;
 		cmd = NULL;
 		i = -1;
 		while (++i < (sizeof(g_cmd_tab) / sizeof(t_cmd)) && !cmd)
