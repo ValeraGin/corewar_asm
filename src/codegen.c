@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:23:52 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 20:18:55 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:26:20 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	realloc_code_buffer(t_codegen *cg)
 	cg->code_buffer_size += CHAMP_MAX_SIZE;
 	if (!(cg->code = (char *)realloc(cg->code,
 			((size_t)cg->code_buffer_size + MAX_STATEMENT_SIZE))))
-		print_error("Error malloc", 0);
+		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 }
 
 void init_codegen(t_codegen *cg)
@@ -48,7 +48,9 @@ char*	gen_code(t_lexeme *c, int *ret_size)
 			c = handle_label(&cg, c);
 		else if (c && (c->type == NEWLINE))
 			c = c->next;
-		else print_error("expected instructions or label", 0);
+		else
+			print_error_format_lex(GEN_ERROR, c,
+				"expected instructions or label\n");
 	}
 	replace_mentions(&cg);
 	*ret_size = cg.code_pos;

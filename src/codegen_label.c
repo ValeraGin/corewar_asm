@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 15:55:04 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 14:59:46 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:26:11 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_label		*init_label(char *name, int op_pos)
 	t_label	*label;
 
 	if (!(label = (t_label *)ft_memalloc(sizeof(t_label))))
-		print_error("alloc error", 0);
+		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 	if (!(label->name = ft_strdup(name)))
-		print_error("alloc error", 0);
+		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 	label->op_pos = op_pos;
 	label->mentions = NULL;
 	label->next = NULL;
@@ -86,7 +86,8 @@ void	replace_mentions(t_codegen *cg)
 	while (label)
 	{
 		if (label->op_pos == -1)
-			print_error("label has mention, but don,t have place", 0);
+			print_error_format(GEN_ERROR,
+			"label '%s' has mention, but don,t have place\n", label->name);
 		else
 		{
 			mention = label->mentions;

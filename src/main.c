@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 20:29:30 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:22:09 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@
 #include "error.h"
 #include "gen.h"
 
-static void	print_usage(void)
-{
-	ft_printf("Usage: ./asm [-a] [*] <champion.s>\n");
-	exit(0);
-}
+#define HELP_OPTION (1 << ('h' - 'a'))
 
-void	free_assm(t_assm *assm)
-{
-	ft_strdel(&(assm->out_filename));
-}
+#define EXIT_SUCCESS 0
+#define EXIT_INVALID_OPTIONS 600
 
 int			compile_file(int options, const char *filename, char *out_filename)
 {
@@ -38,43 +32,58 @@ int			compile_file(int options, const char *filename, char *out_filename)
 	t_lexeme	*lexems_head;
 	t_champion	ch;
 
-
 	assm.options = options;
 	assm.filename = filename;
 	assm.out_filename = out_filename;
 	if ((assm.input_fd = open(assm.filename, O_RDONLY)) < 0)
-		print_error("Can't read source file", errno);
-	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
-		print_error("Can't open to write file", errno);
-	lexems = lexems_head = read_lexems(assm.input_fd);
+		print_error(errno, "Can't read source file\n");
+	lexems = lexems_head = read_lexems(assm.input_fd, assm.filename);
 	init_champ(&ch);
 	lexems = read_header(lexems, &ch);
 	ch.code = gen_code(lexems, &(ch.code_size));
 	free_lexeme_list(&(lexems_head));
-	if (!champ_write_to_file(&ch, assm.output_fd))
-		print_error("Error when write already generated champ code to file", errno);
+	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
+		print_error(errno, "Can't open to write file\n");
+	champ_write_to_file(&ch, assm.output_fd);
 	free_champ(&ch);
-	free_assm(&assm);
+	ft_strdel(&(assm.out_filename));
 	return (1);
+}
+
+int	print_usage(void)
+{
+	ft_printf("Usage: ./asm [-a] [*] <champion.s>\n");
+	exit(0);
+}
+
+int	print_invalid_option()
+{
+	ft_printf("Invalid Option\n");
+	exit(EXIT_INVALID_OPTIONS);
 }
 
 int		main(int argc, char const *argv[])
 {
-	int			options;
-	int			i;
+	int	i;
+	int	options;
+	int options_from_one_arg;
 
 	if (argc < 2)
-	{
-		print_usage();
-		return (0);
-	}
-	if (!(options = handle_options(&argc, &argv)))
-		return (0);
+		return (print_usage());
+	options = 0;
 	i = 1;
+	while (i < argc && argv[i][0] == '-')
+	{
+		options_from_one_arg = handle_option_str(argv[i++]);
+		if (!options_from_one_arg)
+			print_invalid_option();
+		options |= options_from_one_arg;
+	}
+	if ((argc < 2) || (options & HELP_OPTION))
+		print_usage();
 	while (i < argc)
 	{
 		compile_file(options, argv[i], replace_file_ext(argv[i], ".cor"));
 		i++;
 	}
-	return (0);
 }

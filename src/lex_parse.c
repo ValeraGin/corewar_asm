@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:24:20 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 19:52:31 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:28:42 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,68 +33,95 @@ int		parse_integer(const char *str, int *i)
 	return (nbr);
 }
 
-t_lexeme *parse_number(const char *line, int row, int *column,
-							t_type_lexem type)
+t_lexeme *parse_number(const char *line, t_lexeme_pos *pos, t_type_lexem type)
 {
 	unsigned start;
 	t_lexeme *lexeme;
 	int sign;
 	int res;
-	// int32_t i32;
 
-	lexeme = init_lexeme(row, (*column), type);
-	start = (*column);
+	lexeme = init_lexeme(pos, type);
+	start = pos->column;
 	sign = 0;
-
-	// i32 = ft_atoi32(&(line[*column]));
-
-	if (line[*column] && line[*column] == '-')
-		(*column) += sign = 1;
-
-	if ((res = parse_integer(line, column)) == -1)
-		print_error("no digits", 0);
-
-
-
+	if (line[pos->column] && line[pos->column] == '-')
+		pos->column += sign = 1;
+	if ((res = parse_integer(line, &(pos->column))) == -1)
+		print_error_info_pos(LEX_ERROR, pos, "expected a number\n");
 	lexeme->data_number = sign ? -res : res;
 	return (lexeme);
 }
 
-t_lexeme *parse_string(int fd, const char *line, int row, int *column)
+void		handle_multiline(t_lexeme *lexeme, t_lexeme_pos *pos, char **line)
+{
+	char *tmp;
+
+	while (get_next_line(pos->fd, line) == GNL_OK)
+	{
+		pos->row++;
+		pos->column = 0;
+		while ((*line)[pos->column] && (*line)[pos->column] != STRING_CHAR)
+			++(pos->column);
+		if (!(tmp = ft_strndup(*line, pos->column)))
+			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
+		if (!(lexeme->data_str = ft_strjoin_wf(lexeme->data_str, tmp, 2)))
+			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
+		if ((*line)[pos->column] == STRING_CHAR)
+			return ;
+		else
+		if (!(lexeme->data_str = ft_strjoinc_wf(lexeme->data_str, '\n', 0, 1)))
+			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
+		ft_strdel(line);
+	}
+	print_error_info_pos(LEX_ERROR, pos, "no found close sign for string\n");
+}
+
+t_lexeme	*parse_string(char **line, t_lexeme_pos *pos)
 {
 	unsigned start;
 	t_lexeme *lexeme;
 
-	lexeme = init_lexeme(row, (*column), STRING);
-	start = ++(*column);
-	while (line[*column] && line[*column] != STRING_CHAR)
-		++(*column);
-	if (!line[*column])
-		print_error("no found close sign for string", 0);
-	++(*column);
-	lexeme->data_str = ft_strndup(&(line[start]), (*column) - start - 1);
+	lexeme = init_lexeme(pos, STRING);
+	start = ++(pos->column);
+	while ((*line)[pos->column] && (*line)[pos->column] != STRING_CHAR)
+		++(pos->column);
+
+	if (!(lexeme->data_str = ft_strndup(&((*line)[start]),
+										pos->column - start)))
+		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
+
+	if (!(*line)[pos->column])
+	{
+		if (!(lexeme->data_str = ft_strjoinc_wf(lexeme->data_str, '\n', 0, 1)))
+			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
+		ft_strdel(line);
+		handle_multiline(lexeme, pos, line);
+	}
+	// if (!line[pos->column])
+	// 	print_error_info_pos(LEX_ERROR, pos,
+	// 		"no found close sign for string\n");
+	++(pos->column);
 	return (lexeme);
 }
 
-t_lexeme *parse_identifier(const char *line, int row, int *column,
-							t_type_lexem type)
+t_lexeme *parse_identifier(char *line, t_lexeme_pos *pos,
+	t_type_lexem type)
 {
-	unsigned start;
+	int start;
 	t_lexeme *lexeme;
 
-	start = *column;
-	lexeme = init_lexeme(row, (*column), type);
-	while (line[*column] && ft_strchr(LABEL_CHARS, line[*column]))
-		++(*column);
+	start = pos->column;
+	lexeme = init_lexeme(pos, type);
+	while (line[pos->column] && ft_strchr(LABEL_CHARS, line[pos->column]))
+		++(pos->column);
 
-	if (*column - start)
+	if (pos->column - start)
 	{
-		if (!(lexeme->data_str = ft_strndup(&(line[start]), (*column) - start)))
-			print_error("error alloc memory", 0);
+		if (!(lexeme->data_str = ft_strndup(&(line[start]), pos->column - start)))
+			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 
 		if (lexeme->type == UNKNOWN)
 		{
-			if (line[*column] == LABEL_CHAR && ++(*column))
+			if (line[pos->column] == LABEL_CHAR && ++(pos->column))
 				lexeme->type = LABEL;
 			else if (is_register(lexeme->data_str))
 			{
@@ -106,36 +133,31 @@ t_lexeme *parse_identifier(const char *line, int row, int *column,
 			else
 				lexeme->type = OPERATION;
 		}
-		// else if (lexeme->type == DIRECT_LABEL || lexeme->type == INDIRECT_LABEL)
-		// 	if (!(line[*column] == LABEL_CHAR && ++(*column)))
-		// 		print_error("error label", 0);
 	}
 	else
-		print_error("error ident", 0);
+		print_error_info_pos(LEX_ERROR, pos, "wrong identification\n");
 	return (lexeme);
 }
 
-t_lexeme *parse_lexeme(int fd, int row, int *column, const char *line)
+t_lexeme *parse_lexeme(char **line, t_lexeme_pos *pos)
 {
-	// if (row == 8)
-	// 	write(1, "", 1);
-	if (line[*column] == SEPARATOR_CHAR && ++(*column))
-		return (init_lexeme(row, (*column), SEPARATOR));
-	else if (line[*column] == CMD_CHAR && ++(*column))
-		return (parse_identifier(line, row, column, COMMAND));
-	else if (line[*column] == DIRECT_CHAR && ++(*column))
+	if ((*line)[pos->column] == SEPARATOR_CHAR && ++(pos->column))
+		return (init_lexeme(pos, SEPARATOR));
+	else if ((*line)[pos->column] == CMD_CHAR && ++(pos->column))
+		return (parse_identifier((*line), pos, COMMAND));
+	else if ((*line)[pos->column] == DIRECT_CHAR && ++(pos->column))
 	{
-		if (line[*column] == LABEL_CHAR && ++(*column))
-			return (parse_identifier(line, row, column, DIRECT_LABEL));
+		if ((*line)[pos->column] == LABEL_CHAR && ++(pos->column))
+			return (parse_identifier((*line), pos, DIRECT_LABEL));
 		else
-			return (parse_number(line, row, column, DIRECT));
+			return (parse_number((*line), pos, DIRECT));
 	}
-	else if (line[*column] == STRING_CHAR)
-		return (parse_string(fd, line, row, column));
-	else if (line[*column] == LABEL_CHAR && ++(*column))
-		return (parse_identifier(line, row, column, INDIRECT_LABEL));
-	else if (ft_isdigit(line[*column]) || line[*column] == '-')
-		return (parse_number(line, row, column, INDIRECT));
+	else if ((*line)[pos->column] == STRING_CHAR)
+		return (parse_string(line, pos));
+	else if ((*line)[pos->column] == LABEL_CHAR && ++(pos->column))
+		return (parse_identifier((*line), pos, INDIRECT_LABEL));
+	else if (ft_isdigit((*line)[pos->column]) || (*line)[pos->column] == '-')
+		return (parse_number((*line), pos, INDIRECT));
 	else
-		return (parse_identifier(line, row, column, UNKNOWN));
+		return (parse_identifier((*line), pos, UNKNOWN));
 }

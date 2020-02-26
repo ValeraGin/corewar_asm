@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 20:25:07 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 19:08:43 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 
 # define ARGUMENTS 1 << 16
 
+/*
+**	types lexemes
+*/
 typedef enum
 {
 	COMMAND = 0,
@@ -35,33 +38,62 @@ typedef enum
 	UNKNOWN = 12
 }	t_type_lexem;
 
-typedef struct s_lexeme
+/*
+**	lexeme position in file
+*/
+typedef struct	s_lexeme_pos
+{
+	const char		*filename;
+	int				fd;
+	int 			row;
+	int				column;
+}				t_lexeme_pos;
+
+t_lexeme_pos	*init_lexeme_pos(const char *filename, int	fd);
+
+typedef struct	s_lexeme
 {
 	struct s_lexeme *next;
-	char		*data_str;
-	int			data_number;
-	int 		row;
-	int			column;
-	int			complete_func;
+	char			*data_str;
+	int				data_number;
+	const char		*filename;
+	int 			row;
+	int				column;
 	t_type_lexem	type;
-} t_lexeme;
+}				t_lexeme;
 
-t_lexeme	*skip_newline(t_lexeme *c);
+t_lexeme	*init_lexeme(t_lexeme_pos *pos, t_type_lexem type);
+void		add_lexeme(t_lexeme **list, t_lexeme *new);
+void		free_lexeme_list(t_lexeme **list);
 
+/*
+**	register is "r[0-9]{1,2}/n"
+**	example: r01, r5
+**	exception: r00, r0 - not a register
+*/
 int			is_register(const char *str);
+
 int			is_delimiter(char c);
 int			is_whitespace(char c);
 
-int			skip_whitespaces(int *column, const char *line);
-int			skip_comment(int *column, const char *line);
+/*
+**	skip_whitespaces('\t', '\v', '\f', '\r', ' ')
+*/
+int			skip_whitespaces(char *line, t_lexeme_pos *pos);
 
-t_lexeme	*init_lexeme(int row, int column, t_type_lexem type);
-void		add_lexeme(t_lexeme **list, t_lexeme *new);
+/*
+**	skip_comment
+**	skip all chars after comment_char ('#' || ';')
+**	to the end of the line
+*/
+int			skip_comment(char *line, t_lexeme_pos *pos);
 
-t_lexeme	*parse_lexeme(int fd, int row, int *column, const char *line);
+/*
+**	skip function for codegen/header reader
+*/
+t_lexeme	*skip_newline(t_lexeme *c);
 
-t_lexeme	*read_lexems(int fd);
-
-void		free_lexeme_list(t_lexeme **list);
+t_lexeme	*parse_lexeme(char **line, t_lexeme_pos *pos);
+t_lexeme	*read_lexems(int fd, const char *filename);
 
 #endif

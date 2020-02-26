@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 21:25:13 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:04:17 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ typedef struct		s_champion_
 
 void		free_champ(t_champion *ch);
 void		init_champ(t_champion *ch);
-int			champ_write_to_file(t_champion *ch, int fd);
+void		champ_write_to_file(t_champion *ch, int fd);
 
 t_lexeme	*read_header(t_lexeme *c, t_champion *ch);
 char*		gen_code(t_lexeme *list, int *ret_size);
 
-int			handle_options(int *ac, const char ***av);
+int			handle_option_str(char *option_str);
 
 #endif

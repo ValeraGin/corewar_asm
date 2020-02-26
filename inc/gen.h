@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 19:09:54 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 20:18:12 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 16:44:13 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ t_label		*find_label(t_label *list, char *name);
 void		replace_mentions(t_codegen *cg);
 
 void		free_codegen(t_codegen *cg);
+
 
 #endif

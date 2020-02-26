@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 14:08:28 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/24 21:39:36 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 18:25:54 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ t_lexeme *handle_args(t_codegen *cg, t_lexeme *c, t_op *op, int8_t *r_types)
 			c = c->next;
 		}
 		else
-			print_error("expected argument", 0);
+			print_error_format_lex(GEN_ERROR, c, "expected argument\n");
 
 		if (arg_i != op->count_of_args - 1)
 		{
 			if (c->type != SEPARATOR)
-				print_error("expected separator", 0);
+				print_error_format_lex(GEN_ERROR, c, "expected separator\n");
 			c = c->next;
 		}
 		arg_i++;

@@ -9,6 +9,7 @@
 		"error.h": "c",
 		"string.h": "c",
 		"strings.h": "c",
-		"gen.h": "c"
+		"gen.h": "c",
+		"stdlib.h": "c"
 	}
 }
