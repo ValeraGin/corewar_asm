@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:09:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:38:04 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:34:23 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_cmd	g_cmd_tab[2] =
 
 t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 {
-	int i;
+	size_t i;
 	t_cmd *cmd;
 
 	while (c && (c->type == COMMAND || c->type == NEWLINE))
@@ -50,7 +50,7 @@ t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 			print_error_format_lex(GEN_ERROR, c,
 			"no found string parameter after header command %s\n", cmd->name);
 		((char **)ch)[cmd->offset] = c->data_str;
-		if (ft_strlen(c->data_str) > cmd->max_length)
+		if (ft_strlen(c->data_str) > (size_t)cmd->max_length)
 			print_error_format_lex(GEN_ERROR, c,
 				"maximum length for %s command is %d\n", cmd->name, cmd->max_length);
 		c = skip_newline(c->next);

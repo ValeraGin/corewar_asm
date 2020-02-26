@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 20:04:17 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 20:31:32 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void		champ_write_to_file(t_champion *ch, int fd);
 t_lexeme	*read_header(t_lexeme *c, t_champion *ch);
 char*		gen_code(t_lexeme *list, int *ret_size);
 
-int			handle_option_str(char *option_str);
+int			handle_option_str(const char *option_str);
 
 #endif

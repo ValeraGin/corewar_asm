@@ -6,13 +6,15 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 20:22:09 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/26 22:05:14 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <errno.h>
 #include <sysexits.h>
+
+#include <decompiler.h>
 
 #include "libft.h"
 #include "asm.h"
@@ -83,7 +85,13 @@ int		main(int argc, char const *argv[])
 		print_usage();
 	while (i < argc)
 	{
-		compile_file(options, argv[i], replace_file_ext(argv[i], ".cor"));
+		if (argv[i][ft_strlen(argv[i]) - 1] == 's')
+			compile_file(options, argv[i], replace_file_ext(argv[i], ".cor"));
+		else if (argv[i][ft_strlen(argv[i]) - 1] == 'r')
+			decompile_file(options, argv[i],
+				replace_file_ext(argv[i], ".s_my"));
+
 		i++;
 	}
+	exit(0);
 }

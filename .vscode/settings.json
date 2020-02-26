@@ -10,6 +10,7 @@
 		"string.h": "c",
 		"strings.h": "c",
 		"gen.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"decompiler.h": "c"
 	}
 }

@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   options.c                                          :+:      :+:    :+:   */
+/*   decompiler.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/15 16:20:51 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 20:31:25 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/26 21:53:24 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/26 21:58:03 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef DECOMPILER_H
+# define DECOMPILER_H
 
-int		handle_option_str(const char *option_str)
-{
-	int	wi;
-	int options;
+# include "op.h"
 
-	wi = 1;
-	options = 0;
-	while (option_str[wi])
-	{
-		if ('a' <= option_str[wi] && option_str[wi] <= 'z')
-			options |= 1 << (option_str[wi] - 'a');
-		wi++;
-	}
-	return (options);
-}
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+
+int		decompile_file(int options, const char *filename, char *out_filename);
+
+#endif
