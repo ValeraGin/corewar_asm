@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:07:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:33:36 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:35:43 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		print_error_format_lex(int ret_code, t_lexeme *c,
 
 	ft_dprintf(STDERR_FILENO,
 			"%s:%d:%d: %serror%s: ",
-			c->filename, c->row + 1, c->column+ 1, PF_RED, PF_EOC);
+			c->filename, c->row + 1, c->column + 1, PF_RED, PF_EOC);
 	va_start(args, format);
 	ft_vdprintf(STDERR_FILENO, format, args);
 	va_end(args);

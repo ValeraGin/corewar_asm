@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_free.c                                         :+:      :+:    :+:   */
+/*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/25 20:03:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:34:28 by hmathew          ###   ########.fr       */
+/*   Created: 2020/02/27 20:04:30 by hmathew           #+#    #+#             */
+/*   Updated: 2020/02/27 20:40:49 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#ifndef HEADER_H
+# define HEADER_H
 
-void	free_lexeme_list(t_lexeme **list)
+typedef struct		s_cmd
 {
-	t_lexeme	*current;
-	t_lexeme	*delete;
+	char			*name;
+	int				max_length;
+	int				offset;
+}					t_cmd;
 
-	current = *list;
-	while (current)
-	{
-		delete = current;
-		current = current->next;
-		ft_memdel((void **)&delete);
-	}
-	*list = NULL;
-}
+extern t_cmd		g_cmd_tab[2];
+
+#endif

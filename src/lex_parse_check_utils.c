@@ -6,14 +6,14 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:41:50 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 15:54:29 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:30:06 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "libft.h"
 
-int		is_whitespace(char c)
+int	is_whitespace(char c)
 {
 	return (c == '\t' ||
 			c == '\v' ||

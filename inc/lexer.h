@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 19:08:43 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:48:52 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ typedef enum
 */
 typedef struct	s_lexeme_pos
 {
-	const char		*filename;
-	int				fd;
-	int 			row;
-	int				column;
+	const char	*filename;
+	int			fd;
+	int			row;
+	int			column;
 }				t_lexeme_pos;
 
 t_lexeme_pos	*init_lexeme_pos(const char *filename, int	fd);
@@ -57,43 +57,44 @@ typedef struct	s_lexeme
 	char			*data_str;
 	int				data_number;
 	const char		*filename;
-	int 			row;
+	int				row;
 	int				column;
 	t_type_lexem	type;
 }				t_lexeme;
 
-t_lexeme	*init_lexeme(t_lexeme_pos *pos, t_type_lexem type);
-void		add_lexeme(t_lexeme **list, t_lexeme *new);
-void		free_lexeme_list(t_lexeme **list);
+t_lexeme		*init_lexeme(t_lexeme_pos *pos, t_type_lexem type);
+void			add_lexeme(t_lexeme **list, t_lexeme *new);
+void			free_lexeme_list(t_lexeme **list);
 
 /*
 **	register is "r[0-9]{1,2}/n"
 **	example: r01, r5
 **	exception: r00, r0 - not a register
 */
-int			is_register(const char *str);
+int				is_register(const char *str);
 
-int			is_delimiter(char c);
-int			is_whitespace(char c);
+int				is_delimiter(char c);
+int				is_whitespace(char c);
 
 /*
 **	skip_whitespaces('\t', '\v', '\f', '\r', ' ')
 */
-int			skip_whitespaces(char *line, t_lexeme_pos *pos);
+int				skip_whitespaces(char *line, t_lexeme_pos *pos);
 
 /*
 **	skip_comment
 **	skip all chars after comment_char ('#' || ';')
 **	to the end of the line
 */
-int			skip_comment(char *line, t_lexeme_pos *pos);
+int				skip_comment(char *line, t_lexeme_pos *pos);
 
 /*
 **	skip function for codegen/header reader
 */
-t_lexeme	*skip_newline(t_lexeme *c);
+t_lexeme		*skip_newline(t_lexeme *c);
 
-t_lexeme	*parse_lexeme(char **line, t_lexeme_pos *pos);
-t_lexeme	*read_lexems(int fd, const char *filename);
+t_lexeme		*parse_string(char **line, t_lexeme_pos *pos);
+t_lexeme		*parse_lexeme(char **line, t_lexeme_pos *pos);
+t_lexeme		*read_lexems(int fd, const char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:26:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:13:50 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:34:41 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "error.h"
 
-void add_lexeme(t_lexeme **list, t_lexeme *new)
+void		add_lexeme(t_lexeme **list, t_lexeme *new)
 {
 	t_lexeme	*current;
 
@@ -34,7 +34,7 @@ void add_lexeme(t_lexeme **list, t_lexeme *new)
 	}
 }
 
-t_lexeme		*init_lexeme(t_lexeme_pos *pos, t_type_lexem type)
+t_lexeme	*init_lexeme(t_lexeme_pos *pos, t_type_lexem type)
 {
 	t_lexeme	*lexeme;
 

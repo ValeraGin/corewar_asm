@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/02/24 19:47:32 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:47:19 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 
 # define MAX_ARGS_NUMBER		4
 # define MAX_PLAYERS			4
-# define MEM_SIZE				(4*1024)
-# define IDX_MOD				(MEM_SIZE / 8)
-# define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
+# define MEM_SIZE				4*1024
+# define IDX_MOD				MEM_SIZE / 8
+# define CHAMP_MAX_SIZE			MEM_SIZE / 6
 
 # define COMMENT_CHAR			'#'
 # define ALT_COMMENT_CHAR		';'
@@ -58,8 +58,8 @@ typedef char	t_arg_type;
 # define T_IND					4
 # define T_LAB					8
 
-# define PROG_NAME_LENGTH		(128)
-# define COMMENT_LENGTH			(2048)
+# define PROG_NAME_LENGTH		128
+# define COMMENT_LENGTH			2048
 # define COREWAR_EXEC_MAGIC		0xea83f3
 
 # define OPER_CODE_SIZE		1

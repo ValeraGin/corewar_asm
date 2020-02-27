@@ -7,41 +7,35 @@ Pas la pour etre ici. - Silicon Val[list]
 Dieu est la plus belle invention.
 Tapis dans l'ombre je veille. - Minou"
 
-start:
 	ld -42, r2
-	zjmp %:begin
-first_attack:
+	zjmp %73
 	sti r10, r15, r9
 	live %42
 	zjmp %-410
-p2:
-	ld %50986512, r10		# 02 90 03 09 fe 10 0a
+	ld %50986512, r10
 	ld %-392, r9
-	ld %84540929, r2		# 02 90 05 09 fe 01 02
+	ld %84540929, r2
 	ld %-487, r3
-	ld %118095856, r4		# 02 90 07 09 ff f0 04
+	ld %118095856, r4
 	ld %-502, r5
 	ld %-7, r7
 	ld -511, r1
-	zjmp %:first_attack
-begin:
-	ld %55575553, r8		# 02 90 03 50 04 01 08
-	st r1, r15				# 03 50 01 0f
-	st r8, -4				# 03 70 08 ff fc
-	fork %:def
+	zjmp %-67
+	ld %55575553, r8
+	st r1, r15
+	st r8, -4
+	fork %298
 	live %42
-	fork %:p2
-p1:
-	ld %190054913, r10		# 02 90 0b 54 02 01 0a
+	fork %-81
+	ld %190054913, r10
 	ld %-396, r9
-	ld %190055425, r2		# 02 90 0b 54 04 01 02
+	ld %190055425, r2
 	ld %-491, r3
 	st r2, r4
 	ld %-506, r5
 	ld %-11, r7
 	ld -511, r1
-	zjmp %:first_attack
-store_def:
+	zjmp %-148
 	st r4, -37
 	st r4, -47
 	st r4, -57
@@ -88,59 +82,46 @@ store_def:
 	st r4, -467
 	st r4, -477
 	live %42
-	zjmp %:store_def
-def:
-	ld %252645135, r4		# 02 90 0f 0f 0f 0f 04
+	zjmp %-230
+	ld %252645135, r4
 	live %42
 	ld 511, r1
-	fork %:second_attack
+	fork %16
 	st r15, -27
-inside:
 	live %42
-	zjmp %:store_def
-second_attack:
-#	st r15, 6
+	zjmp %-263
 	live %42
-	fork %:store_def
-#	st r15, 104
+	fork %-271
 	live %42
-	fork %:second_bis
+	fork %47
 	live %42
-	fork %:s3
-s1:
+	fork %91
 	ld %5, r3
 	ld %511, r5
-	ld %190055429, r2		# 0b 54 04 05
-	ld %33554431, r6		# 01 ff ff ff
+	ld %190055429, r2
+	ld %33554431, r6
 	ld 511, r1
-	zjmp %:go_erase
-second_bis:
+	zjmp %118
 	live %42
-	fork %:s4
-s2:
+	fork %80
 	ld %9, r3
 	ld %506, r5
-	ld %17519622, r2		# 01 0b 54 06
-#	st r15, 11
+	ld %17519622, r2
 	ld 17, r6
 	ld 511, r1
-	zjmp %:go_erase
-unused:
+	zjmp %76
 	live %42
 	sti r2, r3, r1
-s3:
 	ld %13, r3
 	ld %501, r5
-	ld %50401039, r2		# 03 01 0f 0f
+	ld %50401039, r2
 	st r2, r6
 	ld 511, r1
-	zjmp %:go_erase
-s4:
+	zjmp %33
 	st r15, -42
 	ld %511, r3
 	ld %496, r5
 	st r4, r2
-	st r4, r6				# 0f 0f 0f 0f
-	zjmp%:go_erase			#just for waiting 20 cycles
-go_erase:
+	st r4, r6
+	zjmp %3
 	sti r2, r3, r1

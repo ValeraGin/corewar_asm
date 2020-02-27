@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:15:51 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:21:32 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:10:13 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void		handle_mention(t_codegen *cg, t_lexeme *c, t_op *op)
 	t_label		*label;
 	size_t		size;
 
-	size = (c->type == DIRECT_LABEL && !op->short_tdir) ? DIR_SIZE : IND_SIZE;
+	size = (c->type == DIRECT_LABEL && !op->short_tdir) ?
+				DIR_SIZE : IND_SIZE;
 	if (!(label = find_label(cg->labels, c->data_str)))
 	{
 		label = init_label(c->data_str, -1);
@@ -40,4 +41,33 @@ void		handle_mention(t_codegen *cg, t_lexeme *c, t_op *op)
 	}
 	add_mention(&label->mentions, init_mention(cg, c, size));
 	cg->code_pos += size;
+}
+
+void		replace_mentions(t_codegen *cg)
+{
+	t_label		*label;
+	t_mention	*mention;
+
+	label = cg->labels;
+	while (label)
+	{
+		if (label->op_pos == -1)
+			print_error_format(GEN_ERROR,
+			"label '%s' has mention, but don,t have place\n", label->name);
+		else
+		{
+			mention = label->mentions;
+			while (mention)
+			{
+				if (mention->size == 2)
+					int32_to_b(cg->code, mention->pos,
+					(int16_t)(label->op_pos - mention->op_pos), mention->size);
+				else
+					int32_to_b(cg->code, mention->pos,
+						label->op_pos - mention->op_pos, mention->size);
+				mention = mention->next;
+			}
+		}
+		label = label->next;
+	}
 }

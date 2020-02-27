@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 22:05:14 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:58:58 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,17 @@
 #include <errno.h>
 #include <sysexits.h>
 
-#include <decompiler.h>
-
+#include "decompiler.h"
 #include "libft.h"
 #include "asm.h"
 #include "lexer.h"
 #include "error.h"
 #include "gen.h"
 
-#define HELP_OPTION (1 << ('h' - 'a'))
-
 #define EXIT_SUCCESS 0
 #define EXIT_INVALID_OPTIONS 600
 
-int			compile_file(int options, const char *filename, char *out_filename)
+int		compile_file(int options, const char *filename, char *out_filename)
 {
 	t_assm		assm;
 	t_lexeme	*lexems;
@@ -39,7 +36,8 @@ int			compile_file(int options, const char *filename, char *out_filename)
 	assm.out_filename = out_filename;
 	if ((assm.input_fd = open(assm.filename, O_RDONLY)) < 0)
 		print_error(errno, "Can't read source file\n");
-	lexems = lexems_head = read_lexems(assm.input_fd, assm.filename);
+	lexems_head = read_lexems(assm.input_fd, assm.filename);
+	lexems = lexems_head;
 	init_champ(&ch);
 	lexems = read_header(lexems, &ch);
 	ch.code = gen_code(lexems, &(ch.code_size));
@@ -52,13 +50,13 @@ int			compile_file(int options, const char *filename, char *out_filename)
 	return (1);
 }
 
-int	print_usage(void)
+int		print_usage(void)
 {
 	ft_printf("Usage: ./asm [-a] [*] <champion.s>\n");
 	exit(0);
 }
 
-int	print_invalid_option()
+int		print_invalid_option(void)
 {
 	ft_printf("Invalid Option\n");
 	exit(EXIT_INVALID_OPTIONS);
@@ -66,12 +64,10 @@ int	print_invalid_option()
 
 int		main(int argc, char const *argv[])
 {
-	int	i;
-	int	options;
+	int i;
+	int options;
 	int options_from_one_arg;
 
-	if (argc < 2)
-		return (print_usage());
 	options = 0;
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
@@ -81,7 +77,7 @@ int		main(int argc, char const *argv[])
 			print_invalid_option();
 		options |= options_from_one_arg;
 	}
-	if ((argc < 2) || (options & HELP_OPTION))
+	if ((argc < 2) || (options & (1 << ('h' - 'a'))))
 		print_usage();
 	while (i < argc)
 	{
@@ -90,7 +86,6 @@ int		main(int argc, char const *argv[])
 		else if (argv[i][ft_strlen(argv[i]) - 1] == 'r')
 			decompile_file(options, argv[i],
 				replace_file_ext(argv[i], ".s_my"));
-
 		i++;
 	}
 	exit(0);

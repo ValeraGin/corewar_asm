@@ -6,13 +6,13 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:27:05 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:26:15 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:45:31 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gen.h"
 
-t_op		*get_operation(char* name)
+t_op		*get_operation(char *name)
 {
 	size_t	i;
 
@@ -26,7 +26,7 @@ t_op		*get_operation(char* name)
 	return (NULL);
 }
 
-t_lexeme *handle_operation(t_codegen *cg, t_lexeme *c)
+t_lexeme	*handle_operation(t_codegen *cg, t_lexeme *c)
 {
 	t_op	*op;
 	int8_t	types_code;

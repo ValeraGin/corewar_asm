@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:02:07 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:02:31 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:27:14 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include "error.h"
 #include "gen.h"
 
-void		free_champ(t_champion *ch)
+void	free_champ(t_champion *ch)
 {
 	ft_strdel(&(ch->code));
 	ft_strdel(&(ch->name));
 	ft_strdel(&(ch->comment));
 }
 
-void init_champ(t_champion *ch)
+void	init_champ(t_champion *ch)
 {
 	ch->code = 0;
 	ch->code_size = 0;
@@ -29,7 +29,7 @@ void init_champ(t_champion *ch)
 	ch->name = NULL;
 }
 
-void champ_write_to_file(t_champion *ch, int fd)
+void	champ_write_to_file(t_champion *ch, int fd)
 {
 	int32_t	len;
 	int32_t	pos;

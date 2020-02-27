@@ -6,33 +6,27 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:09:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 20:34:23 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:09:45 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "asm.h"
 #include "error.h"
-
-#define OFFSETOF(st, m) ((size_t)&(((st *)0)->m))
-
-typedef struct		s_cmd
-{
-	char			*name;
-	int				max_length;
-	int				offset;
-}					t_cmd;
+#include "header.h"
 
 t_cmd	g_cmd_tab[2] =
 {
-	{NAME_CMD_STRING, PROG_NAME_LENGTH, OFFSETOF(t_champion, name)/8},
-	{COMMENT_CMD_STRING, COMMENT_LENGTH, OFFSETOF(t_champion, comment)/8}
+	{NAME_CMD_STRING, PROG_NAME_LENGTH,
+		(((size_t)&(((t_champion *)0)->name))) / 8},
+	{COMMENT_CMD_STRING, COMMENT_LENGTH,
+		(((size_t)&(((t_champion *)0)->comment))) / 8}
 };
 
 t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 {
-	size_t i;
-	t_cmd *cmd;
+	size_t	i;
+	t_cmd	*cmd;
 
 	while (c && (c->type == COMMAND || c->type == NEWLINE))
 	{
@@ -52,7 +46,7 @@ t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 		((char **)ch)[cmd->offset] = c->data_str;
 		if (ft_strlen(c->data_str) > (size_t)cmd->max_length)
 			print_error_format_lex(GEN_ERROR, c,
-				"maximum length for %s command is %d\n", cmd->name, cmd->max_length);
+		"maximum length for %s command is %d\n", cmd->name, cmd->max_length);
 		c = skip_newline(c->next);
 	}
 	return (c);

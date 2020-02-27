@@ -11,6 +11,7 @@
 		"strings.h": "c",
 		"gen.h": "c",
 		"stdlib.h": "c",
-		"decompiler.h": "c"
+		"decompiler.h": "c",
+		"unistd.h": "c"
 	}
 }

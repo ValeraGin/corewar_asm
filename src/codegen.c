@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:23:52 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/26 18:26:20 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 20:11:03 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	realloc_code_buffer(t_codegen *cg)
 		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 }
 
-void init_codegen(t_codegen *cg)
+void	init_codegen(t_codegen *cg)
 {
 	cg->code = NULL;
 	cg->code_pos = 0;
@@ -31,10 +31,10 @@ void init_codegen(t_codegen *cg)
 	cg->oper_pos = 0;
 }
 
-char*	gen_code(t_lexeme *c, int *ret_size)
+char	*gen_code(t_lexeme *c, int *ret_size)
 {
-	t_codegen cg;
-	char *code_for_ret;
+	t_codegen	cg;
+	char		*code_for_ret;
 
 	init_codegen(&cg);
 	while (c->type != END)
@@ -57,5 +57,5 @@ char*	gen_code(t_lexeme *c, int *ret_size)
 	code_for_ret = cg.code;
 	cg.code = 0;
 	free_codegen(&cg);
-	return(code_for_ret);
+	return (code_for_ret);
 }

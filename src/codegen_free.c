@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 20:08:04 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/25 20:18:05 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/27 19:40:50 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	free_labels(t_label **list)
 	*list = NULL;
 }
 
-void		free_codegen(t_codegen *cg)
+void	free_codegen(t_codegen *cg)
 {
 	ft_strdel(&(cg->code));
 	free_labels(&(cg->labels));
