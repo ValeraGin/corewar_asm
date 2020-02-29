@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:48:52 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/29 14:36:19 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "op.h"
 # include "libft.h"
 
-# define ARGUMENTS 1 << 16
+# define ARGUMENTS 2048
 
 /*
 **	types lexemes
