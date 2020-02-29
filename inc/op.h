@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2020/02/29 14:44:09 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/29 14:48:00 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ typedef char	t_arg_type;
 **	(MAX_ARGS_NUMBER*MAX_ARG_SIZE)+OPER_CODE_SIZE+TYPES_CODE_SIZE
 */
 
-# define MAX_ARG_SIZE	18
+# define CHAMP_MAX_SIZE		684
+# define MAX_STATEMENT_SIZE	14
+# define MAX_ARG_SIZE		18
 
 typedef struct		s_op
 {
