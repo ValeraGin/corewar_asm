@@ -33,7 +33,7 @@ $(LIBFT):
 
 .PHONY: all clean fclean re
 
-all: $(TARGET_EXEC)
+all: $(TARGET_EXEC) $(LIBFT)
 
 clean:
 	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Clean objects $(PROJ_NAME) \033[0m" $<

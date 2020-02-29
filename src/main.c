@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:58:58 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/02/29 19:55:43 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define EXIT_SUCCESS 0
 #define EXIT_INVALID_OPTIONS 600
 
-int		compile_file(int options, const char *filename, char *out_filename)
+void	compile_file(int options, const char *filename, char *out_filename)
 {
 	t_assm		assm;
 	t_lexeme	*lexems;
@@ -46,8 +46,9 @@ int		compile_file(int options, const char *filename, char *out_filename)
 		print_error(errno, "Can't open to write file\n");
 	champ_write_to_file(&ch, assm.output_fd);
 	free_champ(&ch);
+	ft_printf("%s[SUCCESS]%s ", PF_GREEN, PF_EOC);
+	ft_printf("Generate %s from %s\n", assm.out_filename, assm.out_filename);
 	ft_strdel(&(assm.out_filename));
-	return (1);
 }
 
 int		print_usage(void)
