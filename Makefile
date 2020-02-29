@@ -1,37 +1,61 @@
-PROJ_NAME=ASM
-NAME = asm
-SRC = src
-CC = gcc
-FLAGS = -g -Wall -Wextra
+PROJ_NAME ?= ASM
+TARGET_EXEC ?= asm
+
+BUILD_DIR ?= ./obj
+SRC_DIRS ?= ./src
+
+SRCS := $(shell find $(SRC_DIRS) -type f -name *.c )
+OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
+
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
-SRCS = $(shell find $(SRC) -type f | grep -E "\.c$$")
-INC = $(LIBFTDIR)/inc inc
-OBJS = $(SRCS:.c=.o)
 
-.PHONY: all clean fclean re
+INC_DIRS := $(LIBFTDIR)/inc inc
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+CDEBUGFLAG = -g
+CFLAGS ?= $(CDEBUGFLAG) -Wall -Wextra -Werror $(INC_FLAGS) -MMD -MP
 
-all: $(NAME)
+# make executable file
+$(TARGET_EXEC): $(OBJS) $(LIBFT)
+	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Compiling binary:\033[0m" $@
+	@$(CC) $(LIBFT) $(OBJS) -o $@ $(LDFLAGS)
 
-%.o: %.c
-	@echo "\033[0;32m [$(PROJ_NAME)] \033[0m   \033[0;33m Compiling:\033[0m" $<
-	@$(CC) $(FLAGS) $(addprefix -I,$(INC)) -o $@ -c $<
+# c source
+$(BUILD_DIR)/%.c.o: %.c
+	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Compiling:\033[0m" $<
+	@$(MKDIR_P) $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
-	@echo "\033[0;32m [$(PROJ_NAME)] \033[0m   \033[0;33m Compiling binary:\033[0m" $@
-	@$(CC) $(FLAGS) -fprofile-arcs -ftest-coverage $(addprefix -I,$(INC)) $(LIBFT) $(OBJS) -o $(NAME)
-
+# make my libft
 $(LIBFT):
 	@make -C $(LIBFTDIR)
 
+.PHONY: all clean fclean re
+
+all: $(TARGET_EXEC)
+
 clean:
-	@echo "\033[0;32m [$(PROJ_NAME)] \033[0m   \033[0;33m Clean objects $(PROJ_NAME) \033[0m" $<
-	@rm -rf $(OBJS)
+	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Clean objects $(PROJ_NAME) \033[0m" $<
+	@$(RM) -r $(BUILD_DIR)
 	@make -C $(LIBFTDIR) clean
 
-fclean: clean
-	@echo "\033[0;32m [$(PROJ_NAME)] \033[0m   \033[0;33m Clean bin $(PROJ_NAME) \033[0m" $<
-	@rm -rf $(NAME)
+fclean:
+	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Clean objects $(PROJ_NAME) \033[0m" $<
+	@$(RM) -r $(BUILD_DIR)
+	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Clean bin $(PROJ_NAME) \033[0m" $<
+	@rm -rf $(TARGET_EXEC)
 	@make -C $(LIBFTDIR) fclean
 
 re: fclean all
+
+-include $(DEPS)
+
+MKDIR_P ?= mkdir -p
+
+
+
+
+
+
+
