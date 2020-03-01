@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:24:20 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:01:31 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:39:59 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_lexeme	*parse_number(const char *line, t_lexeme_pos *pos,
 	if (line[pos->column] && line[pos->column] == '-')
 		pos->column += sign = 1;
 	if ((res = parse_integer(line, &(pos->column))) == -1)
-		print_error_info_pos(LEX_ERROR, pos, "expected a number\n");
+		print_error_info_pos(LEX_ERROR, pos, "Expected a number\n");
 	lexeme->data_number = sign ? -res : res;
 	return (lexeme);
 }
@@ -55,25 +55,25 @@ t_lexeme	*parse_number(const char *line, t_lexeme_pos *pos,
 t_lexeme	*parse_identifier(char *line, t_lexeme_pos *pos,
 	t_type_lexem type)
 {
-	int			start;
+	int			tmp;
 	t_lexeme	*lexeme;
 
-	start = pos->column;
+	tmp = pos->column;
 	lexeme = init_lexeme(pos, type);
 	while (line[pos->column] && ft_strchr(LABEL_CHARS, line[pos->column]))
 		++(pos->column);
-	if (!(pos->column - start))
-		print_error_info_pos(LEX_ERROR, pos, "wrong identification\n");
-	if (!(lexeme->data_str = ft_strndup(&(line[start]), pos->column - start)))
+	if (!(pos->column - tmp))
+		print_error_info_pos(LEX_ERROR, pos, "Wrong identification\n");
+	if (!(lexeme->data_str = ft_strndup(&(line[tmp]), pos->column - tmp)))
 		print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 	if (lexeme->type == UNKNOWN)
 	{
 		if (line[pos->column] == LABEL_CHAR && ++(pos->column))
 			lexeme->type = LABEL;
-		else if (is_register(lexeme->data_str) && (start = 1))
+		else if (is_register(lexeme->data_str) && (tmp = 1))
 		{
 			lexeme->type = REGISTER;
-			lexeme->data_number = parse_integer(lexeme->data_str, &start);
+			lexeme->data_number = parse_integer(lexeme->data_str, &tmp);
 			free(lexeme->data_str);
 		}
 		else

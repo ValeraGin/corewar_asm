@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:07:19 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:34:05 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:00:45 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int8_t	handle_arg(t_codegen *cg, t_lexeme *c, t_op *op, int arg_i)
 
 	type = get_arg_type(c->type);
 	if (!(op->arg_type[arg_i] & type))
-		print_error_format_lex(GEN_ERROR, c, "wrong type of parameter\n");
+		perror_fmt_lex(GEN_E, c, "Wrong type of parameter\n");
 	if (c->type == INDIRECT_LABEL
 		|| c->type == DIRECT_LABEL)
 		handle_mention(cg, c, op);

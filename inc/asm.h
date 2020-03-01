@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:09:37 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:56:48 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:38:34 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 typedef struct	s_assm
 {
-	int			options;
 	const char	*filename;
 	char		*out_filename;
 	int			input_fd;
@@ -39,7 +38,5 @@ void			champ_write_to_file(t_champion *ch, int fd);
 
 t_lexeme		*read_header(t_lexeme *c, t_champion *ch);
 char			*gen_code(t_lexeme *list, int *ret_size);
-
-int				handle_option_str(const char *option_str);
 
 #endif

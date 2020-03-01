@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:52:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:51:22 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 16:51:53 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 #include "decompiler.h"
 #include "op.h"
+
+#include "libft.h"
 
 void	perror_and_exit(int exit_code, char *format, ...)
 {
@@ -95,13 +97,12 @@ void	read_statement(FILE *file_asm, FILE *file_diasm)
 	}
 }
 
-void	decompile_file(int options, const char *filename, char *out_filename)
+void	decompile_file(const char *filename, char *out_filename)
 {
 	FILE		*file_asm;
 	FILE		*file_diasm;
 	t_header	header;
 
-	(void)options;
 	file_asm = fopen(filename, "r");
 	if (file_asm == NULL)
 		perror_and_exit(1, "Error to open the file %s\n", filename);
@@ -112,6 +113,8 @@ void	decompile_file(int options, const char *filename, char *out_filename)
 		perror_and_exit(1, "Error to open the file for writing %s\n", filename);
 	fprintf(file_diasm, "%s \"%s\"\n%s \"%s\"\n\n",
 		NAME_CMD_STRING, header.prog_name, COMMENT_CMD_STRING, header.comment);
+	printf("%s[SUCCESS]%s ", PF_GREEN, PF_EOC);
+	printf("Generate %s from %s\n", out_filename, filename);
 	read_statement(file_asm, file_diasm);
 	fclose(file_diasm);
 	fclose(file_asm);

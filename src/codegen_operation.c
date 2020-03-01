@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:27:05 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:45:31 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:02:04 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ t_lexeme	*handle_operation(t_codegen *cg, t_lexeme *c)
 		c = handle_args(cg, c, op, &types_code);
 		if (op->args_code)
 			cg->code[cg->oper_pos + 1] = types_code;
+		skip_newline(c);
 	}
 	else
-		print_error_format_lex(GEN_ERROR, c,
+		perror_fmt_lex(GEN_E, c,
 			"unknown instruction '%s' found\n", c->data_str);
 	return (c);
 }

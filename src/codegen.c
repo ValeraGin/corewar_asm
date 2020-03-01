@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:23:52 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:11:03 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 16:27:37 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,35 @@ void	init_codegen(t_codegen *cg)
 	cg->oper_pos = 0;
 }
 
+void	handle_lexems(t_lexeme *c, t_codegen *cg)
+{
+	int			last_newline;
+
+	while (c->type != END)
+	{
+		if ((cg->oper_pos = cg->code_pos) >= cg->code_buffer_size)
+			realloc_code_buffer(cg);
+		last_newline = 0;
+		if (c && (c->type == OPERATION))
+			c = handle_operation(cg, c);
+		else if (c && (c->type == LABEL))
+			c = handle_label(cg, c);
+		else if (c && (c->type == NEWLINE) && (last_newline = 1))
+			c = c->next;
+		else
+			perror_fmt_lex(GEN_E, c, "expected instructions or label or newline\n");
+	}
+	if (!last_newline)
+		print_warning_format_lex(c, "No newline at end of file\n");
+}
+
 char	*gen_code(t_lexeme *c, int *ret_size)
 {
 	t_codegen	cg;
 	char		*code_for_ret;
 
 	init_codegen(&cg);
-	while (c->type != END)
-	{
-		if (cg.code_pos >= cg.code_buffer_size)
-			realloc_code_buffer(&cg);
-		cg.oper_pos = cg.code_pos;
-		if (c && (c->type == OPERATION))
-			c = handle_operation(&cg, c);
-		else if (c && (c->type == LABEL))
-			c = handle_label(&cg, c);
-		else if (c && (c->type == NEWLINE))
-			c = c->next;
-		else
-			print_error_format_lex(GEN_ERROR, c,
-				"expected instructions or label\n");
-	}
+	handle_lexems(c, &cg);
 	replace_mentions(&cg);
 	*ret_size = cg.code_pos;
 	code_for_ret = cg.code;

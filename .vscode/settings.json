@@ -12,6 +12,7 @@
 		"gen.h": "c",
 		"stdlib.h": "c",
 		"decompiler.h": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"options.h": "c"
 	}
 }

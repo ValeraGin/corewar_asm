@@ -3,20 +3,20 @@
 #                                                         :::      ::::::::    #
 #    big_feet.s                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: clafleur <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/02/16 20:28:04 by clafleur          #+#    #+#              #
-#    Updated: 2014/03/02 17:23:26 by clafleur         ###   ########.fr        #
+#    Updated: 2020/03/01 16:26:22 by hmathew          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.name "top defense plus plus"
-.comment "la meilleure defense c'est d'avoir une bonne defense"
+.name "dfgdf"
+.comment "jkafsfigsa"
 
 start:
 
 start_piege:
-ld		%-16, r5				# r2 = soustraction de start pr aller a r2 : carry a 1
+ld%-16, r5# r2 = soustraction de start pr aller a r2 : carry a 1
 ld		%-12, r4				# r4 = suite (soustraction de start pr aller a r3 : suite du carry)
 ld		%-8, r6					# r6 = soustration de start pr aller a r10 : zjmp
 ld		%150994944, r10			# r10 = zjmp
@@ -37,7 +37,7 @@ fork	%:begin
 
 piege1:							# while(1)
 live	%118978653103279		# je suis en vie
-sti		r2, %:start, r5 
+sti		r2, %:start, r5
 sti		r3, %:start, r4
 sti		r10, %:start, r6
 sub		r5, r16, r5
@@ -65,15 +65,14 @@ zjmp	%:begin
 
 piege2:
 live	%198562346853412
-sti		r2, %:end, r7 
+sti		r2, %:end, r7
 sti		r3, %:end, r9
 sti		r10, %:end, r11
-add		r7, r16, r7
+add		r7, r16, r5
 add		r9, r16, r9
 add		r11, r16, r11
 sub		r12, r13, r12			# decrementation du compteur
 zjmp	%:start_piege			# reviens en debut de boucle
 ld		%0, r8					# carry = 1
-zjmp	%:piege2				# reviens en debut de boucle
-
 end:
+zjmp	%:piege2

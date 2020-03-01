@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:53:24 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 20:53:39 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:39:19 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ union				u_num
 	int32_t	num32;
 };
 
-void				decompile_file(int options, const char *filename,
-										char *out_filename);
+void				decompile_file(const char *filename, char *out_filename);
 
 #endif

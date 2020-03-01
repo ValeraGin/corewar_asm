@@ -6,12 +6,13 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:41:50 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/29 19:51:51 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:36:29 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "libft.h"
+
 
 int	is_whitespace(char c)
 {
@@ -37,15 +38,17 @@ int	is_delimiter(char c)
 
 int	is_register(const char *str)
 {
+	int len;
 	int	i;
 
-	i = 0;
-	if (ft_strlen(str) >= 2 && ft_strlen(str) <= 3 && str[i] == REG_CHAR)
+	len = ft_strlen(str);
+	if (str[0] == REG_CHAR && (len == 2 || len == 3))
 	{
-		i++;
-		while (ft_isdigit(str[i]))
-			i++;
-		return (!str[i] && ft_atoi(&str[1]) > 0);
+		i = 0;
+		while (++i < len)
+			if (!ft_isdigit(str[i]))
+				return (0);
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 19:46:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:47:05 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/01 15:40:04 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		handle_multiline(t_lexeme *lexeme, t_lexeme_pos *pos, char **line)
 			print_error(ALLOC_ERROR, ALLOC_ERROR_STRING);
 		ft_strdel(line);
 	}
-	print_error_info_pos(LEX_ERROR, pos, "no found close sign for string\n");
+	print_error_info_pos(LEX_ERROR, pos, " No found close sign for string\n");
 }
 
 t_lexeme	*parse_string(char **line, t_lexeme_pos *pos)
