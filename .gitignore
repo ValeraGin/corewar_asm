@@ -5,3 +5,5 @@ asm
 *.my_cor
 *.cor
 *.my_s
+
+*.dSYM
