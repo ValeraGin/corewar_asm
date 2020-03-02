@@ -55,10 +55,3 @@ re: fclean all
 -include $(DEPS)
 
 MKDIR_P ?= mkdir -p
-
-
-
-
-
-
-
