@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:08:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 16:07:40 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:04:55 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # define ALLOC_ERROR 200
 
 # define WARN_INTO_ERR 300
-
 
 # define ALLOC_ERROR_STRING "malloc return NULL, we can't continue work\n"
 

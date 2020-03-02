@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:23:52 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 16:27:37 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:02:34 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ void	handle_lexems(t_lexeme *c, t_codegen *cg)
 		else if (c && (c->type == NEWLINE) && (last_newline = 1))
 			c = c->next;
 		else
-			perror_fmt_lex(GEN_E, c, "expected instructions or label or newline\n");
+			perror_fmt_lex(GEN_E, c,
+				"expected instructions or label or newline\n");
 	}
 	if (!last_newline)
-		print_warning_format_lex(c, "No newline at end of file\n");
+		print_warning_format("No newline at end of file\n");
 }
 
 char	*gen_code(t_lexeme *c, int *ret_size)

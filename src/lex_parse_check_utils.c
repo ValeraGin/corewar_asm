@@ -6,13 +6,12 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:41:50 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 15:36:29 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:05:08 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
 #include "libft.h"
-
 
 int	is_whitespace(char c)
 {

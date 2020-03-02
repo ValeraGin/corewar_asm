@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:56:41 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 13:36:44 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:01:51 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ t_lexeme	*read_lexems(int fd, const char *filename)
 	t_lexeme		*list;
 	t_lexeme_pos	*pos;
 	char			*line;
+	int				gnl_ret;
 
 	pos = init_lexeme_pos(filename, fd);
 	list = 0;
-	while (get_next_line(fd, &line) == GNL_OK)
+	while ((gnl_ret = get_next_line(fd, &line)) == GNL_OK)
 	{
 		pos->column = 0;
 		while (line[pos->column])
@@ -37,5 +38,6 @@ t_lexeme	*read_lexems(int fd, const char *filename)
 		pos->row++;
 	}
 	add_lexeme(&list, init_lexeme(pos, END));
+	free(pos);
 	return (list);
 }

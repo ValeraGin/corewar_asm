@@ -6,11 +6,12 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 20:03:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:34:28 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 15:02:47 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "libft.h"
 
 void	free_lexeme_list(t_lexeme **list)
 {
@@ -22,6 +23,7 @@ void	free_lexeme_list(t_lexeme **list)
 	{
 		delete = current;
 		current = current->next;
+		ft_strdel(&(delete->data_str));
 		ft_memdel((void **)&delete);
 	}
 	*list = NULL;

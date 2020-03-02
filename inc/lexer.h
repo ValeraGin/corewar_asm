@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:21:56 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/29 14:36:19 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 16:00:08 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct	s_lexeme
 
 t_lexeme		*init_lexeme(t_lexeme_pos *pos, t_type_lexem type);
 void			add_lexeme(t_lexeme **list, t_lexeme *new);
+t_lexeme		*get_lexeme_last(t_lexeme *list);
 void			free_lexeme_list(t_lexeme **list);
 
 /*

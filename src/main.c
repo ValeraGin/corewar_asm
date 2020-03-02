@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 16:52:25 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 19:42:37 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	compile_file(const char *filename, char *out_filename)
 	init_champ(&ch);
 	lexems = read_header(lexems, &ch);
 	if (!(ch.code = gen_code(lexems, &(ch.code_size))))
-		print_warning_format("Code size is null");
+		print_warning_format("Code size is null\n");
 	free_lexeme_list(&(lexems_head));
 	if ((assm.output_fd = open(assm.out_filename, O_CREAT | O_RDWR, 0644)) < 0)
 		print_error(errno, "Can't open to write file\n");

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:26:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/02/27 19:34:41 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 15:59:46 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ void		add_lexeme(t_lexeme **list, t_lexeme *new)
 		else
 			*list = new;
 	}
+}
+
+t_lexeme	*get_lexeme_last(t_lexeme *list)
+{
+	if (list)
+	{
+		while (list->next)
+			list = list->next;
+		return (list);
+	}
+	return (NULL);
 }
 
 t_lexeme	*init_lexeme(t_lexeme_pos *pos, t_type_lexem type)

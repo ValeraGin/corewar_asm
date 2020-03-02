@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:09:55 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 16:22:51 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:01:20 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 
 	while (c && (c->type == COMMAND || c->type == NEWLINE))
 	{
-		if (c->type == NEWLINE)
-			c = skip_newline(c);
+		if (c->type == NEWLINE && (c = skip_newline(c)))
+			continue;
 		cmd = NULL;
 		i = -1;
 		while (++i < (sizeof(g_cmd_tab) / sizeof(t_cmd)) && !cmd)
@@ -49,7 +49,7 @@ t_lexeme	*read_header(t_lexeme *c, t_champion *ch)
 		if (((char **)ch)[cmd->offset])
 			perror_fmt_lex(GEN_E, c, CMD_IS_SET, cmd->name);
 		else
-			((char **)ch)[cmd->offset]= c->data_str;
+			((char **)ch)[cmd->offset] = ft_strdup(c->data_str);
 		if (ft_strlen(c->data_str) > (size_t)cmd->max_length)
 			perror_fmt_lex(GEN_E, c, LIMIT_STRLEN, cmd->name, cmd->max_length);
 		c = skip_newline(c->next);

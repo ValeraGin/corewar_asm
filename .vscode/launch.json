@@ -9,14 +9,13 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/asm",
-			"args": ["test/big_feet.s"],
+			"args": ["tests/asm/error/direct_param_no_value.s"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "lldb",
 			"preLaunchTask": "make debug"
-
 		}
 	]
 }

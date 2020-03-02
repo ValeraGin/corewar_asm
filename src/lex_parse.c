@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:24:20 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 15:39:59 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:00:46 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			parse_integer(const char *str, int *i)
 t_lexeme	*parse_number(const char *line, t_lexeme_pos *pos,
 					t_type_lexem type)
 {
-	unsigned	start;
+	int			start;
 	t_lexeme	*lexeme;
 	int			sign;
 	int			res;
@@ -48,6 +48,8 @@ t_lexeme	*parse_number(const char *line, t_lexeme_pos *pos,
 		pos->column += sign = 1;
 	if ((res = parse_integer(line, &(pos->column))) == -1)
 		print_error_info_pos(LEX_ERROR, pos, "Expected a number\n");
+	else if (pos->column == start)
+		print_error_info_pos(LEX_ERROR, pos, "No found number\n");
 	lexeme->data_number = sign ? -res : res;
 	return (lexeme);
 }
@@ -74,7 +76,7 @@ t_lexeme	*parse_identifier(char *line, t_lexeme_pos *pos,
 		{
 			lexeme->type = REGISTER;
 			lexeme->data_number = parse_integer(lexeme->data_str, &tmp);
-			free(lexeme->data_str);
+			ft_strdel(&(lexeme->data_str));
 		}
 		else
 			lexeme->type = OPERATION;

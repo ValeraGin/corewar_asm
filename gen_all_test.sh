@@ -1,58 +1,32 @@
 #!/bin/zsh
 # Author ValeraGin (aka hmathew)
 
-find ./test/ -type f -name "*.cor" -delete
-find ./test/ -type f -name "*.my_cor" -delete
-find ./test/ -type f -name "*.s_my" -delete
-find ./test/ -type f -name "*.hex" -delete
+PATH_TESTS=./tests/asm/error
 
-# for f in ./test/*.s; do
-# 	echo "-----------------------------------"
-# 	echo "Processing file by MY asm - $f"
-# 	# take action on each file. $f store current file name
-# 	./asm $f
-# 	echo "-----------------------------------"
-# 	echo ""
-# done
+find $PATH_TESTS -mindepth 0 -maxdepth 5 -type f -name "*.cor" -delete
+find $PATH_TESTS -mindepth 0 -maxdepth 5 -type f -name "*.my_cor" -delete
+find $PATH_TESTS -mindepth 0 -maxdepth 5 -type f -name "*.s_my" -delete
+find $PATH_TESTS -mindepth 0 -maxdepth 5 -type f -name "*.hex" -delete
 
-# for f in ./test/*.cor; do
-# 	mv "$f" "${f%.*}.my_cor"
-# done
+for f in $(find $PATH_TESTS -mindepth 0 -maxdepth 5 -type f -name "*.s"  ) ; do
+	echo ""
+	echo "--------       $f "
+	./asm $f
 
-# for f in ./test/*.s; do
-# 	echo "-----------------------------------"
-# 	echo "Processing file by ORIG asm - $f"
-# 	# take action on each file. $f store current file name
-# 	./orig_asm $f
-# 	echo "-----------------------------------"
-# 	echo ""
-# done
+	if [ -f "${f%.*}.cor" ]; then
+		mv "${f%.*}.cor" "${f%.*}.my_cor"
+	fi
+	./orig_asm $f
 
-# for f in ./test/*.cor; do
-# 	echo "-----------------------------------"
-# 	echo "Processing diff - $f"
-# 	# take action on each file. $f store current file name
-# 	xxd $f > $f.hex
-# 	xxd "${f%.*}.my_cor" > "${f%.*}.my_cor.hex"
-
-# 	diff $f.hex "${f%.*}.my_cor.hex"
-
-# 	if [ $? -eq 0 ]
-# 	then
-# 		echo "\e[32m[Success]\e[39m file $f and ${f%.*} identically"
-# 	else
-# 		echo "\e[91[Failure]\e[39m file $f and ${f%.*} identically"
-# 	fi
-
-# 	echo "-----------------------------------"
-# 	echo ""
-# done
-
-# for f in ./test/*.cor; do
-# 	echo "-----------------------------------"
-# 	echo "Processing diasm - $f"
-# 	# take action on each file. $f store current file name
-# 	./asm $f
-# 	echo "-----------------------------------"
-# 	echo ""
-# done
+	if [ -f "${f%.*}.cor" ]; then
+		xxd "${f%.*}.my_cor" > "${f%.*}.my_cor.hex"
+		xxd "${f%.*}.cor" > "${f%.*}.cor.hex"
+		diff "${f%.*}.my_cor.hex" "${f%.*}.cor.hex" &>/dev/null
+		if [ $? -eq 0 ]; then
+			echo "\e[32m[FILES OUTPUTS IDENT]\e[39m file "${f%.*}.my_cor.hex" and "${f%.*}.cor.hex" identically"
+		else
+			echo "\e[91m[FILES OUTPUTS NOOOOOO IDENT]\e[39m file "${f%.*}.my_cor.hex" and "${f%.*}.cor.hex" not identically"
+		fi
+	fi
+	echo ""
+done

@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 16:02:07 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 14:09:14 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:04:18 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void	free_champ(t_champion *ch)
 {
-
 	ft_strdel(&(ch->code));
 	ft_strdel(&(ch->name));
 	ft_strdel(&(ch->comment));
@@ -44,12 +43,16 @@ void	champ_write_to_file(t_champion *ch, int fd)
 	pos += 4;
 	if (ch->name)
 		ft_memcpy(&header[pos], ch->name, ft_strlen(ch->name));
-	pos += PROG_NAME_LENGTH;
-	pos += 4;
+	else
+		print_warning_format("Champion without name\n");
+	pos += PROG_NAME_LENGTH + 4;
 	int32_to_b(header, pos, ch->code_size, 4);
 	pos += 4;
 	if (ch->comment)
 		ft_memcpy(&header[pos], ch->comment, ft_strlen(ch->comment));
+	else
+		print_warning_format("Champion %s without comment\n",
+			ch->name ? ch->name : "(NO_NAME)");
 	write(fd, header, (size_t)len);
 	free(header);
 	write(fd, ch->code, ch->code_size);
