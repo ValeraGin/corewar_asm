@@ -6,5 +6,5 @@ asm
 *.cor
 *.my_s
 
+*.dSYM.zip
 *.dSYM
-*.dSYM/
