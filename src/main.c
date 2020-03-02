@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/02 19:42:37 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/02 21:15:46 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		main(int argc, char const *argv[])
 			compile_file(argv[i], replace_file_ext(argv[i], ".cor"));
 		else if (argv[i][ft_strlen(argv[i]) - 1] == 'r')
 			decompile_file(argv[i],
-				replace_file_ext(argv[i], ".s_my"));
+				replace_file_ext(argv[i], ".diasm.s"));
 		i++;
 	}
 	exit(0);
