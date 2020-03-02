@@ -47,6 +47,9 @@ fclean:
 	@rm -rf $(TARGET_EXEC)
 	@make -C $(LIBFTDIR) fclean
 
+norme:
+	@norminette | grep Error -B 1
+
 re: fclean all
 
 -include $(DEPS)
