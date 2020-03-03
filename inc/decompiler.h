@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:53:24 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 15:39:19 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/03 22:31:11 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <string.h>
 
 # include "op.h"
+
+# include "libft.h"
 
 typedef struct		s_header
 {
@@ -34,6 +36,36 @@ union				u_num
 	int32_t	num32;
 };
 
+typedef struct		s_label_info
+{
+	int					pos_code;
+	int					pos_file;
+	int					name;
+}					t_label_info;
+
+typedef struct		s_men_info
+{
+	int					pos_code;
+	int					pos_file;
+}					t_men_info;
+
+typedef struct		s_decompiler
+{
+	FILE	*file_asm;
+	FILE	*file_diasm;
+	t_list	*labels;
+	t_list	*mentions;
+}					t_decompiler;
+
+void				del_label(void *li, size_t s);
+void				del_mention(void *mi, size_t s);
+
+t_label_info		*init_label_i(int pos_code, int pos_file);
+t_men_info			*init_mention_info(int pos_code, int pos_file);
+
+void				fprintf_pos(FILE *file, int pos, char *format, ...);
+
 void				decompile_file(const char *filename, char *out_filename);
+void				read_args(t_decompiler *decompiler, t_op *op);
 
 #endif

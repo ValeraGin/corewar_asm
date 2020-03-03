@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:07:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/02 15:42:45 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/03 20:55:21 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		print_error(int ret_code, const char *str)
 	exit(ret_code);
 }
 
-void		print_error_format(int ret_code, const char *format, ...)
+void		perror_format(int ret_code, const char *format, ...)
 {
 	va_list	args;
 

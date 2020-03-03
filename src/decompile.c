@@ -6,165 +6,105 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:52:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/02 23:05:43 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/03 22:38:35 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdarg.h>
 
+#include "error.h"
+
 #include "decompiler.h"
 #include "op.h"
 
 #include "libft.h"
 
-typedef struct	s_label_info
-{
-	int					pos_code;
-	int					pos_file;
-//	struct s_label_info	*next;
-}				t_label_info;
-
-typedef struct	s_men_info
-{
-	int					pos_code;
-//	struct s__info	*next;
-}				t_men_info;
-
-t_label_info		g_label_info_tab[1000];
-t_men_info			g_men_info_tab[1000];
-
-int li = 0;
-int mi = 0;
-
-void	perror_and_exit(int exit_code, char *format, ...)
+void	fprintf_pos(FILE *file, int pos, char *format, ...)
 {
 	va_list	args;
 
 	va_start(args, format);
-	vdprintf(STDERR_FILENO, format, args);
+	fseek(file, pos, SEEK_SET);
+	vfprintf(file, format, args);
 	va_end(args);
-	exit(exit_code);
 }
 
-void	read_arg(FILE *file_asm, FILE *file_diasm, char arg_code, t_op *op)
-{
-	union u_num	num;
-	int			size;
-	const char	*size_str;
-
-	num.num32 = 0;
-	if (arg_code == REG_CODE)
-	{
-		fprintf(file_diasm, "r");
-		size_str = "%hd";
-		size = 1;
-	}
-	else if (arg_code == DIR_CODE)
-	{
-		fprintf(file_diasm, "%%");
-		size_str = (op->short_tdir) ? "%hd" : "%d";
-		size = (op->short_tdir) ? 2 : 4;
-	}
-	else
-	{
-		size_str = "%hd";
-		size = 2;
-	}
-	while (size--)
-		fread(&(num.byte[size]), sizeof(char), 1, file_asm);
-	if ((op->op_code == 9 || op->op_code == 12 || op->op_code == 15) && num.num16)
-		g_men_info_tab[mi++].pos_code = g_label_info_tab[li-1].pos_code + num.num16;
-	fprintf(file_diasm, size_str, num);
-}
-
-void	read_args(FILE *file_asm, FILE *file_diasm, t_op *op)
-{
-	char	arg_types;
-	int		arg_i;
-
-	if (op->args_code)
-	{
-		if (!(fread(&arg_types, sizeof(char), 1, file_asm) == 1))
-			perror_and_exit(1, "not expected end of file");
-	}
-	else
-		arg_types = op->arg_type[0] << 6;
-	arg_i = 0;
-	while (arg_i < op->count_of_args)
-	{
-		read_arg(file_asm, file_diasm,
-			(arg_types & 3 << (6 - (arg_i * 2))) >> (6 - (arg_i * 2)), op);
-		arg_i++;
-		if (arg_i != op->count_of_args)
-			fprintf(file_diasm, ", ");
-	}
-}
-
-void	read_statement(FILE *file_asm, FILE *file_diasm)
+void	read_statement(t_decompiler *dec)
 {
 	unsigned char	op_code;
+	t_label_info	li;
 
-	while (fread(&op_code, sizeof(char), 1, file_asm) == 1)
+	while (fread(&op_code, sizeof(char), 1, dec->file_asm) == 1)
 	{
 		if (op_code && op_code < (sizeof(g_op_tab) / sizeof(t_op)))
 		{
-			g_label_info_tab[li].pos_code = ftell(file_asm);
-			g_label_info_tab[li].pos_file = ftell(file_diasm);
-			li++;
-			fprintf(file_diasm, "      %s ", g_op_tab[op_code].name);
-			read_args(file_asm, file_diasm, &(g_op_tab[op_code]));
+			li.name = 0;
+			li.pos_code = ftell(dec->file_asm);
+			li.pos_file = ftell(dec->file_diasm);
+			ft_lstadd(&(dec->labels), ft_lstnew(&li, sizeof(li)));
+			fprintf(dec->file_diasm, "       %s ", g_op_tab[op_code].name);
+			read_args(dec, &(g_op_tab[op_code]));
 		}
 		else
-			perror_and_exit(1, "bad operation code - (%d).\n", op_code);
-		fprintf(file_diasm, "\n");
+			perror_format(1, "bad operation code - (%d).\n", op_code);
+		fprintf(dec->file_diasm, "\n");
 	}
 }
 
-void	write_labels(FILE *file_diasm)
+void	write_labels(t_decompiler *dec)
 {
-	int mi_i;
-	int li_i;
-	int label_c;
+	t_list			*label_curr;
+	t_list			*men_curr;
+	t_label_info	*li;
+	t_men_info		*mi;
+	int				label_c;
 
 	label_c = 0;
-	mi_i = 0;
-	while (mi_i < mi)
+	label_curr = dec->labels;
+	while (label_curr)
 	{
-		li_i = 0;
-		while (li_i < li)
+		li = (t_label_info*)label_curr->content;
+		men_curr = dec->mentions;
+		while (men_curr && (mi = (t_men_info*)men_curr->content))
 		{
-			if (g_label_info_tab[li_i].pos_code == g_men_info_tab[mi_i].pos_code)
+			if (mi->pos_code == li->pos_code)
 			{
-				fseek(file_diasm, g_label_info_tab[li_i].pos_file, SEEK_SET);
-				fprintf(file_diasm, "l%d4", label_c++);
+				if (!li->name)
+					fprintf_pos(dec->file_diasm, li->pos_file,
+						"l%03d:", (li->name = ++label_c));
+				fprintf_pos(dec->file_diasm, mi->pos_file, ":l%03d", li->name);
 			}
-			li_i++;
+			men_curr = men_curr->next;
 		}
-		mi_i++;
+		label_curr = label_curr->next;
 	}
 }
 
 void	decompile_file(const char *filename, char *out_filename)
 {
-	FILE		*file_asm;
-	FILE		*file_diasm;
-	t_header	header;
+	t_decompiler	decompiler;
+	t_header		header;
 
-	file_asm = fopen(filename, "r");
-	if (file_asm == NULL)
-		perror_and_exit(1, "Error to open the file %s\n", filename);
-	if (fread(&header, sizeof(t_header), 1, file_asm) != 1)
-		perror_and_exit(1, "Error to read header %s\n", filename);
-	file_diasm = fopen(out_filename, "w");
-	if (file_diasm == NULL)
-		perror_and_exit(1, "Error to open the file for writing %s\n", filename);
-	fprintf(file_diasm, "%s \"%s\"\n%s \"%s\"\n\n",
+	decompiler.labels = 0;
+	decompiler.mentions = 0;
+	if (!(decompiler.file_asm = fopen(filename, "r")))
+		perror_format(1, "Error to open the file %s\n", filename);
+	if (fread(&header, sizeof(t_header), 1, decompiler.file_asm) != 1)
+		perror_format(1, "Error to read header %s\n", filename);
+	if ((decompiler.file_diasm = fopen(out_filename, "w")) == NULL)
+		perror_format(1, "Error to open the file for writing %s\n", filename);
+	fprintf(decompiler.file_diasm, "%s \"%s\"\n%s \"%s\"\n\n",
 		NAME_CMD_STRING, header.prog_name, COMMENT_CMD_STRING, header.comment);
-	printf("%s[SUCCESS]%s ", PF_GREEN, PF_EOC);
-	printf("Generate %s from %s\n", out_filename, filename);
-	read_statement(file_asm, file_diasm);
-	write_labels(file_diasm);
-	fclose(file_diasm);
-	fclose(file_asm);
+	read_statement(&decompiler);
+	ft_lstrev(&(decompiler.labels));
+	ft_lstrev(&(decompiler.mentions));
+	write_labels(&decompiler);
+	printf("%s[SUCCESS]%s Generate %s from %s\n",
+			PF_GREEN, PF_EOC, out_filename, filename);
+	ft_lstdel(&(decompiler.labels), &ft_lstdel_func);
+	ft_lstdel(&(decompiler.mentions), &ft_lstdel_func);
+	fclose(decompiler.file_diasm);
+	fclose(decompiler.file_asm);
+	ft_strdel(&out_filename);
 }

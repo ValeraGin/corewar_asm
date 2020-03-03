@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 14:08:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/02 21:04:55 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/03 20:55:21 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 void		print_error(int ret_code, const char *str);
 void		print_error_info_pos(int ret_code, t_lexeme_pos *pos,
 			const char *error_str);
-void		print_error_format(int ret_code, const char *format, ...);
+void		perror_format(int ret_code, const char *format, ...);
 void		perror_fmt_lex(int ret_code, t_lexeme *c,
 					const char *format, ...);
 

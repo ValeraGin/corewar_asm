@@ -6,11 +6,12 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:20:51 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/01 15:37:21 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/03 15:50:07 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "options.h"
 
 int		g_options = 0;
 
