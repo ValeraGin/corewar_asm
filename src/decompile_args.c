@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 19:42:09 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/04 18:09:54 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/04 19:53:09 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void		read_arg(t_decompiler *dec, char arg_code, t_op *op)
 	size_str = arg_formatstr_size(dec, arg_code, &size, op);
 	size_i = size;
 	while (size_i--)
-		fread(&(num.byte[size_i]), sizeof(char), 1, dec->file_asm);
+		if (!(fread(&(num.byte[size_i]), sizeof(char), 1, dec->file_asm)))
+			perror_format(1, "not expected end of file");
 	if (size == 2 && num.num16)
 	{
 		mi.pos_code = ((t_label_info*)dec->labels->content)->pos_code

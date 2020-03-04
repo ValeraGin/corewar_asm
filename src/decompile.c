@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:52:48 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/03 22:38:35 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/04 19:31:23 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	write_labels(t_decompiler *dec)
 		men_curr = dec->mentions;
 		while (men_curr && (mi = (t_men_info*)men_curr->content))
 		{
-			if (mi->pos_code == li->pos_code)
+			if (mi->pos_code == li->pos_code && label_c < 999)
 			{
 				if (!li->name)
 					fprintf_pos(dec->file_diasm, li->pos_file,
