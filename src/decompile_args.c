@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 19:42:09 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/03 22:36:03 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/04 18:09:54 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,16 @@ void		read_arg(t_decompiler *dec, char arg_code, t_op *op)
 {
 	union u_num	num;
 	int			size;
+	int			size_i;
 	const char	*size_str;
 	t_men_info	mi;
 
 	num.num32 = 0;
 	size_str = arg_formatstr_size(dec, arg_code, &size, op);
-	while (size--)
-		fread(&(num.byte[size]), sizeof(char), 1, dec->file_asm);
-	if ((op->op_code == 9 || op->op_code == 12 || op->op_code == 15)
-				&& num.num16)
+	size_i = size;
+	while (size_i--)
+		fread(&(num.byte[size_i]), sizeof(char), 1, dec->file_asm);
+	if (size == 2 && num.num16)
 	{
 		mi.pos_code = ((t_label_info*)dec->labels->content)->pos_code
 				+ num.num16;
