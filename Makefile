@@ -14,7 +14,7 @@ LIBFT = $(LIBFTDIR)/libft.a
 INC_DIRS := $(LIBFTDIR)/inc inc
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CDEBUGFLAG = -g
-CFLAGS ?= $(CDEBUGFLAG) -Wall -Wextra -Werror $(INC_FLAGS) -MMD -MP
+CFLAGS ?= $(CDEBUGFLAG) -Wall -Wextra -Werror -O3 $(INC_FLAGS) -MMD -MP
 
 # make executable file
 $(TARGET_EXEC): $(OBJS) $(LIBFT)

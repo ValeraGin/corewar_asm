@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 18:03:42 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/03 21:00:11 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/04 20:35:52 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ int		main(int argc, char const *argv[])
 				replace_file_ext(argv[i], ".diasm.s"));
 		i++;
 	}
-	exit(0);
+	// exit(0);
 }
