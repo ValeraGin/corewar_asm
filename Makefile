@@ -19,7 +19,7 @@ CFLAGS ?= $(CDEBUGFLAG) -Wall -Wextra -Werror -O3 $(INC_FLAGS) -MMD -MP
 # make executable file
 $(TARGET_EXEC): $(OBJS) $(LIBFT)
 	@echo "\033[0;32m[$(PROJ_NAME)] \033[0m      \033[0;33m Compiling binary:\033[0m" $@
-	@$(CC) $(LIBFT) $(OBJS) -o $@ $(LDFLAGS)
+	@$(CC) $(OBJS) $(LIBFT) -o $@ $(LDFLAGS)
 
 # c source
 $(BUILD_DIR)/%.c.o: %.c
