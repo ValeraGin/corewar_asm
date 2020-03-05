@@ -23,7 +23,8 @@ void		print_warning_format(const char *format, ...)
 	va_list	args;
 
 	va_start(args, format);
-	ft_dprintf(STDERR_FILENO, "%s[%s]%s ", PF_YELLOW,
+	ft_dprintf(STDERR_FILENO, "%s[%s]%s ",
+	g_options & (1 << ('w' - 'a')) ? PF_RED : PF_YELLOW,
 	g_options & (1 << ('w' - 'a')) ? "ERROR" : "WARNING"
 	, PF_EOC);
 	ft_vdprintf(STDERR_FILENO, format, args);
