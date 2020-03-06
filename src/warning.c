@@ -23,9 +23,10 @@ void		print_warning_format(const char *format, ...)
 	va_list	args;
 
 	va_start(args, format);
-	ft_dprintf(STDERR_FILENO, "%s[%s]%s ", PF_YELLOW,
-	g_options & (1 << ('w' - 'a')) ? "ERROR" : "WARNING"
-	, PF_EOC);
+	if (g_options & (1 << ('w' - 'a')))
+		ft_dprintf(STDERR_FILENO, "%s[ERROR]%s ", PF_RED, PF_EOC);
+	else
+		ft_dprintf(STDERR_FILENO, "%s[WARNING]%s ", PF_YELLOW, PF_EOC);
 	ft_vdprintf(STDERR_FILENO, format, args);
 	va_end(args);
 	if (g_options & (1 << ('w' - 'a')))
@@ -37,10 +38,12 @@ void		print_warning_format_lex(t_lexeme *c,
 {
 	va_list	args;
 
-	ft_dprintf(STDERR_FILENO,
-		"%s:%d:%d: %s[%s]%s ",
-		c->filename, c->row + 1, c->column + 1, PF_YELLOW,
-		g_options & (1 << ('w' - 'a')) ? "ERROR" : "WARNING", PF_EOC);
+	if (g_options & (1 << ('w' - 'a')))
+		ft_dprintf(STDERR_FILENO, "%s:%d:%d: %s[ERROR]%s ",
+		c->filename, c->row + 1, c->column + 1, PF_RED, PF_EOC);
+	else
+		ft_dprintf(STDERR_FILENO, "%s:%d:%d: %s[WARNING]%s ",
+		c->filename, c->row + 1, c->column + 1, PF_YELLOW, PF_EOC);
 	va_start(args, format);
 	ft_vdprintf(STDERR_FILENO, format, args);
 	va_end(args);

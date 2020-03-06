@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 # Author ValeraGin (aka hmathew)
 
 PATH_TESTS=./tests/asm
