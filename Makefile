@@ -93,6 +93,6 @@ norme:
 
 re: fclean all
 
-# -include $(DEPS)
+-include $(DEPS)
 
 MKDIR_P ?= mkdir -p
