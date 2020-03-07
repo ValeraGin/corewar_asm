@@ -6,7 +6,7 @@
 /*   By: hmathew <hmathew@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:53:24 by hmathew           #+#    #+#             */
-/*   Updated: 2020/03/04 21:17:34 by hmathew          ###   ########.fr       */
+/*   Updated: 2020/03/07 12:56:53 by hmathew          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <string.h>
 
 # include "op.h"
-
 # include "libft.h"
 
 typedef struct		s_header
