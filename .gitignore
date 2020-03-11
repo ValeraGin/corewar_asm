@@ -2,6 +2,7 @@ obj/
 asm
 *.DS_Store
 
+gen_all_test.sh
 *.my_cor
 *.cor
 *.my_s
